@@ -93,7 +93,7 @@
       <ownedOperation xmi:type="uml:Operation" xmi:id="_gSMcwElUEeS40451HsVCZg" name="addFilter( Filter )"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_iz1TEElUEeS40451HsVCZg" name="removeFilter : Filter"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_lmdywElUEeS40451HsVCZg" name="pushToSource(Bundle)"/>
-      <ownedOperation xmi:type="uml:Operation" xmi:id="_nv9O0ElUEeS40451HsVCZg" name="popFromSink : Result"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_nv9O0ElUEeS40451HsVCZg" name="popFromSink : Bundle"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="__kTmMEVhEeSZWddpmDjwXg" name="computable" memberEnd="__kTmMUVhEeSZWddpmDjwXg __kS_IEVhEeSZWddpmDjwXg">
       <ownedEnd xmi:type="uml:Property" xmi:id="__kTmMUVhEeSZWddpmDjwXg" name="eyeDroid_Core" type="_0BsZoEMnEeSCK6Lhjjn4HQ" association="__kTmMEVhEeSZWddpmDjwXg">
@@ -122,7 +122,7 @@
     <packagedElement xmi:type="uml:Interface" xmi:id="_B5hkQElLEeS40451HsVCZg" name="Pipe">
       <ownedOperation xmi:type="uml:Operation" xmi:id="_DI9L0ElLEeS40451HsVCZg" name="push(Bundle)"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_EzA54ElLEeS40451HsVCZg" name="pop : Bundle"/>
-      <ownedOperation xmi:type="uml:Operation" xmi:id="_GDNWcElLEeS40451HsVCZg" name="cleanUp"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_GDNWcElLEeS40451HsVCZg" name="cleanup"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_QVCLkElLEeS40451HsVCZg" name="outputPipe" memberEnd="_QVCLkUlLEeS40451HsVCZg _QVBkgElLEeS40451HsVCZg">
       <ownedEnd xmi:type="uml:Property" xmi:id="_QVCLkUlLEeS40451HsVCZg" name="filter" type="_By_vgEVbEeSZWddpmDjwXg" association="_QVCLkElLEeS40451HsVCZg">
