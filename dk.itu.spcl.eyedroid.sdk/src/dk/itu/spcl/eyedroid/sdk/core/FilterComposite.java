@@ -1,7 +1,8 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 /**
- * Created by Daniel on 10/10/2014.
+ * Abstract class that defines the behavior of a {@link dk.itu.spcl.eyedroid.sdk.core.Filter}
+ * composition (composite pattern).
  */
-public class FilterComposite extends Filter{
+public abstract class FilterComposite extends Filter{
 }

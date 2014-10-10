@@ -27,7 +27,7 @@
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VM9JoUViEeSZWddpmDjwXg" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VM9JokViEeSZWddpmDjwXg" value="1"/>
       </ownedAttribute>
-      <ownedOperation xmi:type="uml:Operation" xmi:id="_2wz-4ElUEeS40451HsVCZg" name="setUp"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_2wz-4ElUEeS40451HsVCZg" name="setup(Scheduler, Computable)"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_31a2gElUEeS40451HsVCZg" name="pushBundle( Bundle )"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_51lXcElUEeS40451HsVCZg" name="popBundle : Bundle"/>
     </packagedElement>
@@ -37,7 +37,7 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wwL5skM0EeSCK6Lhjjn4HQ" value="1"/>
       </ownedEnd>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_By_vgEVbEeSZWddpmDjwXg" name="Filter">
+    <packagedElement xmi:type="uml:Class" xmi:id="_By_vgEVbEeSZWddpmDjwXg" name="Filter" isAbstract="true">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_nrbM4EVeEeSZWddpmDjwXg" name="pipe_i">
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nrbM4UVeEeSZWddpmDjwXg" value="1"/>
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nrbM4kVeEeSZWddpmDjwXg" value="1"/>
@@ -61,10 +61,10 @@
       <ownedOperation xmi:type="uml:Operation" xmi:id="_00irAElKEeS40451HsVCZg" name="popFromInput : Bundle"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_3AdI8ElKEeS40451HsVCZg" name="run"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_DI1hEEVbEeSZWddpmDjwXg" name="Filter_Leaf">
+    <packagedElement xmi:type="uml:Class" xmi:id="_DI1hEEVbEeSZWddpmDjwXg" name="Filter_Leaf" isAbstract="true">
       <generalization xmi:type="uml:Generalization" xmi:id="_J_NjAEVbEeSZWddpmDjwXg" general="_By_vgEVbEeSZWddpmDjwXg"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_HbuSkEVbEeSZWddpmDjwXg" name="Filter_Composite">
+    <packagedElement xmi:type="uml:Class" xmi:id="_HbuSkEVbEeSZWddpmDjwXg" name="Filter_Composite" isAbstract="true">
       <generalization xmi:type="uml:Generalization" xmi:id="_KoyrgEVbEeSZWddpmDjwXg" general="_By_vgEVbEeSZWddpmDjwXg"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_Le4mAEVbEeSZWddpmDjwXg" name="A_filter_Composite_filter" memberEnd="_Le4mAUVbEeSZWddpmDjwXg _LelrEEVbEeSZWddpmDjwXg">
