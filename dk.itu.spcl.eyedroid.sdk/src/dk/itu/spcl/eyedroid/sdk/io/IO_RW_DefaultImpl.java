@@ -3,7 +3,9 @@ package dk.itu.spcl.eyedroid.sdk.io;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 
 /**
- * Created by centos on 10/10/14.
+ * This class is a convenient default implementation that acts both as a
+ * {@link dk.itu.spcl.eyedroid.sdk.io.InputReader} and a {@link dk.itu.spcl.eyedroid.sdk.io.OutputWriter}.
+ *  Other implementations could use different reader and writer objects.
  */
 public class IO_RW_DefaultImpl implements InputReader , OutputWriter{
 
