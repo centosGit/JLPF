@@ -5,4 +5,6 @@ package dk.itu.spcl.eyedroid.sdk.core;
  * composition leaf(composite pattern).
  */
 public abstract class FilterLeaf extends Filter {
+
+
 }
