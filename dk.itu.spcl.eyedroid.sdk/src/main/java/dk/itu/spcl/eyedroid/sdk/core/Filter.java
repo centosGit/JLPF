@@ -115,7 +115,7 @@ public abstract class Filter implements Runnable {
         Bundle inputBundle = popFromInput();
 
         if (inputBundle != null)
-            outputBundle = execute(inputBundle);
+            outputBundle = innerExecute(inputBundle);
 
         if (outputBundle != null)
             pushToOutput(outputBundle);
@@ -128,4 +128,9 @@ public abstract class Filter implements Runnable {
      * @return Processed wrapping object
      */
     protected abstract Bundle execute(Bundle bundle);  //Internal usage
+
+    protected Bundle innerExecute(Bundle bundle){
+        setStarted();
+        return execute(bundle);
+    }
 }
