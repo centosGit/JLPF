@@ -14,81 +14,96 @@ import java.util.List;
  */
 public class Computable {
 
-    private List<Filter> mFilterList;
-    private HashMap<Integer, Filter> mFilterMap;
+    private List<Filter> mFilterList;                   //Filter list
+    private HashMap<Integer, Filter> mFilterMap;        //Map mFilterList replica
 
-    private Pipe mSource;
-    private Pipe mSink;
+    private Pipe mPipeSource;                           //Input pipe
+    private Pipe mPipeSink;                             //Output pipe
 
-    public Computable(){
+    public Computable() {
         mFilterList = new ArrayList<Filter>();
         mFilterMap = new HashMap<Integer, Filter>();
-        mSink = new Pipe();
-        mSource = new Pipe();
+        mPipeSource = new Pipe();
+        mPipeSink = new Pipe();
+    }
+
+    /**
+     * Get an unmodifiable reference to the filter list.
+     *
+     * @return Unmodifiable filter list
+     */
+    public List<Filter> getFilterList() {
+        setupFilterPipes();
+        return Collections.unmodifiableList(mFilterList);
     }
 
     /**
      * Add a {@link dk.itu.spcl.eyedroid.sdk.core.Filter} object to the processing structure.
+     *
      * @param filter Defines a processing filter (single or composed)
      */
-    public boolean addFilter (Filter filter){
-        if( mFilterMap.containsKey(filter.getFilterId()))
+    public boolean addFilter(Filter filter) {
+        if (mFilterMap.containsKey(filter.getFilterId()))
             return false;
         mFilterList.add(filter);
-        mFilterMap.put(filter.getFilterId() , filter);
-
+        mFilterMap.put(filter.getFilterId(), filter);
         return true;
     }
+
     /**
      * Remove a {@link dk.itu.spcl.eyedroid.sdk.core.Filter} object previously added.
-     * @return Return the removed filter.
+     *
+     * @return Return the removed filter
      */
-    public boolean removeFilter (int id){
-
-        if( mFilterMap.containsKey(id)){
+    public boolean removeFilter(int id) {
+        if (mFilterMap.containsKey(id)) {
             Filter filter = mFilterMap.get(id);
             mFilterList.remove(filter);
             return true;
         }
         return false;
     }
+
     /**
      * Push a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object into the source to be processed by the filters
-     * @param bundle Wrapped object to be processed.
+     *
+     * @param bundle Wrapped object to be processed
      */
-    public void pushToSource (Bundle bundle){
-        mSource.push(bundle);
+    public void pushToSource(Bundle bundle) {
+        mPipeSource.push(bundle);
     }
+
     /**
      * Pop a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} processed object from the sink.
-     * @return Wrapped object containing the result.
+     *
+     * @return Wrapped object containing the result
      */
-    public Bundle popFromSink (){
-        return mSink.pop();
+    public Bundle popFromSink() {
+        return mPipeSink.pop();
     }
 
+    /**
+     * Clear all {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} objects connecting {@link dk.itu.spcl.eyedroid.sdk.core.Filter}
+     * object filters.
+     */
+    public void cleanup() {
+        mPipeSink.cleanup();
+        for (Filter filter : mFilterList)
+            filter.getInputPipe().cleanup();
+    }
 
-    private void setupFilterPipes(){
-
-        mFilterList.get(0).setInput(mSource);
-        mFilterList.get(mFilterList.size()-1).setOutput(mSink);
-
-        for( int i = 0 ; i < mFilterList.size() - 1 ; i++ ){
+    /**
+     * Connect added filters by using pipes.
+     * First filter is connected to the core input source.
+     * Last filter is connected to the core output sink.
+     */
+    private void setupFilterPipes() {
+        mFilterList.get(0).setInput(mPipeSource);
+        mFilterList.get(mFilterList.size() - 1).setOutput(mPipeSink);
+        for (int i = 0; i < mFilterList.size() - 1; i++) {
             Pipe pipe = new Pipe();
             mFilterList.get(i).setOutput(pipe);
-            mFilterList.get(i+1).setInput(pipe);
+            mFilterList.get(i + 1).setInput(pipe);
         }
-    }
-
-    public List<Filter> getFilterList(){
-        setupFilterPipes();
-        return Collections.unmodifiableList(mFilterList);
-    }
-
-    public void cleanUp(){
-        mSink.cleanup();
-
-        for( Filter filter : mFilterList )
-            filter.getInputPipe().cleanup();
     }
 }

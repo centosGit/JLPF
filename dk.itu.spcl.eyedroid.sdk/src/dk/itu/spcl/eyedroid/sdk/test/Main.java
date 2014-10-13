@@ -3,15 +3,11 @@ package dk.itu.spcl.eyedroid.sdk.test;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 import dk.itu.spcl.eyedroid.sdk.core.*;
 
-/**
- * Created by centos on 10/12/14.
- */
 public class Main {
 
     public static final String COUNTER = "counter";
 
-
-    public static void main(String [] args){
+    public static void main(String[] args) {
 
         Filter filter1 = new TestFilter();
         filter1.setFilterName("filter 1");
@@ -39,41 +35,34 @@ public class Main {
 
         filterCompo.addFilter(filterCompo2);
 
-
-
         Computable computable = new Computable();
         computable.addFilter(filter1);
         computable.addFilter(filter2);
-
         computable.addFilter(filterCompo);
 
         Scheduler scheduler = new TestScheduler(computable);
-
-        final EyeDroidCore core = new EyeDroidCore(scheduler , computable);
-
-
+        final EyeDroidCore core = new EyeDroidCore(scheduler, computable);
         core.start();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+                while (true) {
                     Bundle bundle = core.popBundle();
                     System.out.println("from sink : " + bundle.get(COUNTER));
                 }
             }
         }).start();
 
-
         int counter = 0;
-        while(true){
+        while (true) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             Bundle bundle = new Bundle();
-            bundle.put(COUNTER , counter++);
+            bundle.put(COUNTER, counter++);
             core.pushBundle(bundle);
         }
     }

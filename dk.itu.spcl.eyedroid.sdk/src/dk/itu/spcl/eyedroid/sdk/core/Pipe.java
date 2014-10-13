@@ -12,27 +12,29 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Pipe {
 
-    private BlockingQueue<Bundle> mInternalQueue;
+    private BlockingQueue<Bundle> mInternalQueue;   //Input/Output blocking queue
 
-    public Pipe(){
+    public Pipe() {
         mInternalQueue = new LinkedBlockingQueue<Bundle>();
     }
 
     /**
      * Push a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object into the pipe.
+     *
      * @param bundle
      */
-    public void push (Bundle bundle){
+    public void push(Bundle bundle) {
         try {
             mInternalQueue.put(bundle);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Pop a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object from the pipe.
      */
-    public Bundle pop (){
+    public Bundle pop() {
         try {
             return mInternalQueue.take();
         } catch (InterruptedException e) {
@@ -40,10 +42,11 @@ public class Pipe {
             return new Bundle();
         }
     }
+
     /**
-     * Cleanup pipe content.
+     * Cleanup pipe queue content.
      */
-    public void cleanup (){
+    public void cleanup() {
         mInternalQueue.clear();
     }
 }

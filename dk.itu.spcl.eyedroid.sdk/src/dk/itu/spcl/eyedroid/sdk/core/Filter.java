@@ -9,39 +9,68 @@ import dk.itu.spcl.eyedroid.sdk.common.Bundle;
  */
 public abstract class Filter implements Runnable {
 
-    private Pipe mInputPipe;
-    private Pipe mOutputPipe;
+    private String mFilterName;    //Filter name
+    private boolean mHasStarted;   //Filter state
+    private Pipe mInputPipe;       //Filter input pipe
+    private Pipe mOutputPipe;      //Filter output pipe
 
-    private String mFilterName;
+    /**
+     * Get filter id.
+     *
+     * @return Object hash code
+     */
+    public int getFilterId() {
+        return this.hashCode();
+    }
 
-    private boolean mHasStarted;
-
+    /**
+     * Get filter name for logging purpose.
+     *
+     * @return Filter name
+     */
     public String getFilterName() {
         return mFilterName;
     }
 
+    /**
+     * Set filter name for logging purpose.
+     *
+     * @param mFilterName Filter name
+     */
     public void setFilterName(String mFilterName) {
         if (!hasStarted())
             this.mFilterName = mFilterName;
     }
 
-    public int getFilterId() {
-        return this.hashCode();
-    }
-
+    /**
+     * Get filter execution state.
+     *
+     * @return Filter state
+     */
     public boolean hasStarted() {
         return mHasStarted;
     }
 
+    /**
+     * Set filter execution state as started
+     */
     protected void setStarted() {
         mHasStarted = true;
     }
 
+    /**
+     * Get filter input pipe (entry point).
+     *
+     * @return Input pipe
+     */
+    public Pipe getInputPipe() {
+        return mInputPipe;
+    }
 
     /**
      * Define a {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} object as input to the filter.
      *
-     * @param pipe Link representation between filters.
+     * @param pipe Link representation between filters
      */
     public void setInput(Pipe pipe) {
         if (!hasStarted())
@@ -51,55 +80,52 @@ public abstract class Filter implements Runnable {
     /**
      * Define a {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} object as output of the filter.
      *
-     * @param pipe Link representation between filters.
+     * @param pipe Link representation between filters
      */
     public void setOutput(Pipe pipe) {
         if (!hasStarted())
             mOutputPipe = pipe;
     }
 
-    public Pipe getInputPipe(){
-        return mInputPipe;
-    }
-
-    /**
-     * Push a processed {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object to the output queue.
-     *
-     * @param bundle Processed wrapping object.
-     */
-    protected void pushToOutput(Bundle bundle) {
-            if (bundle != null)
-                mOutputPipe.push(bundle);
-    }
-
     /**
      * Pop a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object from the input queue.
      *
-     * @return Wrapping object to be processed.
+     * @return Wrapping object to be processed
      */
     protected Bundle popFromInput() {
         return mInputPipe.pop();
     }
 
+    /**
+     * Push a processed {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object to the output queue.
+     *
+     * @param bundle Processed wrapping object
+     */
+    protected void pushToOutput(Bundle bundle) {
+        if (bundle != null)
+            mOutputPipe.push(bundle);
+    }
 
     /**
      * Process a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object.
-     *
-     * @param bundle
      */
-    protected abstract Bundle execute(Bundle bundle);
-
-
     @Override
     public void run() {
-
         Bundle outputBundle = null;
         Bundle inputBundle = popFromInput();
+
         if (inputBundle != null)
             outputBundle = execute(inputBundle);
 
-        if( outputBundle != null )
+        if (outputBundle != null)
             pushToOutput(outputBundle);
-
     }
+
+    /**
+     * Filter execution implementation.
+     *
+     * @param bundle Wrapping object
+     * @return Processed wrapping object
+     */
+    protected abstract Bundle execute(Bundle bundle);  //Internal usage
 }

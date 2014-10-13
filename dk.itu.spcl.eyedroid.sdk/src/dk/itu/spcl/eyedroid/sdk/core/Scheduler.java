@@ -6,53 +6,70 @@ package dk.itu.spcl.eyedroid.sdk.core;
  */
 public abstract class Scheduler {
 
-   private Computable mComputable;
-
-
+    private Computable mComputable;
     private boolean isRunning;
 
-    public Scheduler( Computable computable ){
+    public Scheduler(Computable computable) {
         mComputable = computable;
     }
+
     /**
-     * Run scheduler.
+     * Get scheduler running state.
      *
+     * @return Scheduler state
      */
-    public void innerStart (){
-        setIsRunning(true);
-        start();
-    }
-
-    protected abstract void start();
-    /**
-     * Stop scheduler.
-     */
-    public void innerStop(){
-        setIsRunning(false);
-        stop();
-    }
-    public abstract void stop ();
-    /**
-     * Restart scheduler.
-     */
-    public void restart (){
-        stop();
-        cleanup();
-        start();
-    }
-    /**
-     * Cleanup scheduler content.
-     */
-    public void cleanup (){
-        mComputable.cleanUp();
-    }
-
     public boolean isRunning() {
         return isRunning;
     }
 
-    public void setIsRunning(boolean is){
+    /**
+     * Set scheduler running state
+     *
+     * @param is Set scheduler running state
+     */
+    private void setIsRunning(boolean is) {
         isRunning = is;
     }
 
+    /**
+     * Scheduler start implementation.
+     */
+    protected abstract void start();
+
+    /**
+     * Scheduler stop implementation.
+     */
+    protected abstract void stop();
+
+    /**
+     * Restart scheduler.
+     */
+    public void restart() {
+        innerStop();
+        cleanup();
+        innerStart();
+    }
+
+    /**
+     * Cleanup scheduler content.
+     */
+    public void cleanup() {
+        mComputable.cleanup();
+    }
+
+    /**
+     * Run scheduler.
+     */
+    protected void innerStart() {
+        setIsRunning(true);
+        start();
+    }
+
+    /**
+     * Stop scheduler.
+     */
+    protected void innerStop() {
+        setIsRunning(false);
+        stop();
+    }
 }

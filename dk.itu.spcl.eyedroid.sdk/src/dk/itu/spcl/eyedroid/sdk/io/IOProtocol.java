@@ -15,5 +15,5 @@ public interface IOProtocol {
      * Method used to close any open resources. For example sockets if the protocol is
      * a network implementation or files if it is a local implementation.
      * */
-    public void cleanUp();
+    public void cleanup();
 }
