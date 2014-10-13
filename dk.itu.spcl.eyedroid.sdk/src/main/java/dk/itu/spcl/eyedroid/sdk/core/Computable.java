@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class Computable {
 
-    private List<Filter> mFilterList;                   //Filter list
-    private HashMap<Integer, Filter> mFilterMap;        //Map mFilterList replica
+    protected List<Filter> mFilterList;                   //Filter list
+    protected HashMap<Integer, Filter> mFilterMap;        //Map mFilterList replica
 
-    private Pipe mPipeSource;                           //Input pipe
-    private Pipe mPipeSink;                             //Output pipe
+    protected Pipe mPipeSource;                           //Input pipe
+    protected Pipe mPipeSink;                             //Output pipe
 
     public Computable() {
         mFilterList = new ArrayList<Filter>();
@@ -55,13 +55,13 @@ public class Computable {
      *
      * @return Return the removed filter
      */
-    public boolean removeFilter(int id) {
+    public Filter removeFilter(int id) {
         if (mFilterMap.containsKey(id)) {
-            Filter filter = mFilterMap.get(id);
+            Filter filter = mFilterMap.remove(id);
             mFilterList.remove(filter);
-            return true;
+            return filter;
         }
-        return false;
+        return null;
     }
 
     /**

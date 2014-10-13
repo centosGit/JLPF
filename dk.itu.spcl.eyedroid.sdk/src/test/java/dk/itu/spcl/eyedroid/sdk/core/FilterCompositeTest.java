@@ -1,41 +1,16 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
+import dk.itu.spcl.eyedroid.sdk.impl.CompositeImplementation;
+import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
 import junit.framework.TestCase;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class FilterCompositeTest extends TestCase{
 
-    public class NewComposite extends FilterComposite{
 
-        public int compositeSize(){
-            return mFilterChildren.size();
-        }
 
-        public List<Filter> getList(){
-            return mFilterChildren;
-        }
 
-        public HashMap<Integer , Filter> getMap(){
-            return mFilterMap;
-        }
 
-    }
-
-    public class NewFilter extends Filter{
-
-        @Override
-        protected Bundle execute(Bundle bundle) {
-            StringBuilder builder = new StringBuilder();
-            builder.append((String)bundle.get(MESSAGE)).append(getFilterName());
-            bundle.put(MESSAGE , builder.toString());
-            return bundle;
-        }
-    }
-
-    private static final String MESSAGE = "message";
 
     Filter filter1;
     Filter filter2;
@@ -46,7 +21,7 @@ public class FilterCompositeTest extends TestCase{
     Pipe inputPipe;
     Pipe outputPipe;
 
-    NewComposite composite;
+    CompositeImplementation composite;
     FilterComposite innerComposite;
 
 
@@ -58,22 +33,22 @@ public class FilterCompositeTest extends TestCase{
     protected void setUp() throws Exception {
         super.setUp();
 
-        composite = new NewComposite();
+        composite = new CompositeImplementation();
         innerComposite = new FilterComposite();
 
-        filter1 = new NewFilter();
+        filter1 = new FilterImplementation();
         filter1.setFilterName("1");
 
-        filter2 = new NewFilter();
+        filter2 = new FilterImplementation();
         filter2.setFilterName("2");
 
-        filter3 = new NewFilter();
+        filter3 = new FilterImplementation();
         filter3.setFilterName("3");
 
-        filter4 = new NewFilter();
+        filter4 = new FilterImplementation();
         filter4.setFilterName("4");
 
-        filter5 = new NewFilter();
+        filter5 = new FilterImplementation();
         filter5.setFilterName("5");
 
         inputPipe = new Pipe();
@@ -192,7 +167,7 @@ public class FilterCompositeTest extends TestCase{
         composite.addFilter(filter5);
 
         Bundle bundle = new Bundle();
-        bundle.put(MESSAGE , "0");
+        bundle.put(FilterImplementation.MESSAGE , "0");
 
         inputPipe.push(bundle);
 
@@ -203,7 +178,7 @@ public class FilterCompositeTest extends TestCase{
         assertNotNull("Bundle in output is null" , bundle );
 
         assertEquals("Execution order in composite is not correct" , "012345" ,
-                ((String)bundle.get(MESSAGE)));
+                ((String)bundle.get(FilterImplementation.MESSAGE)));
 
     }
 
@@ -216,18 +191,18 @@ public class FilterCompositeTest extends TestCase{
         composite.addFilter(filter5);
 
         Bundle bundle = new Bundle();
-        bundle.put(MESSAGE , "0");
+        bundle.put(FilterImplementation.MESSAGE , "0");
 
         inputPipe.push(bundle);
         composite.run();
 
         assertTrue("Filter is not in start mode after executing" , composite.hasStarted());
-        assertTrue("Filter is not in start mode after executing" , innerComposite.hasStarted());
-        assertTrue("Filter is not in start mode after executing" , filter1.hasStarted());
-        assertTrue("Filter is not in start mode after executing" , filter2.hasStarted());
-        assertTrue("Filter is not in start mode after executing" , filter3.hasStarted());
-        assertTrue("Filter is not in start mode after executing" , filter4.hasStarted());
-        assertTrue("Filter is not in start mode after executing" , filter5.hasStarted());
+        assertTrue("Filter is not in start mode after executing", innerComposite.hasStarted());
+        assertTrue("Filter is not in start mode after executing", filter1.hasStarted());
+        assertTrue("Filter is not in start mode after executing", filter2.hasStarted());
+        assertTrue("Filter is not in start mode after executing", filter3.hasStarted());
+        assertTrue("Filter is not in start mode after executing", filter4.hasStarted());
+        assertTrue("Filter is not in start mode after executing", filter5.hasStarted());
     }
 
 

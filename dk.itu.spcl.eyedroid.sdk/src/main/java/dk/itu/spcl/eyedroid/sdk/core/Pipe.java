@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class Pipe {
 
-    private BlockingQueue<Bundle> mInternalQueue;   //Input/Output blocking queue
+    protected BlockingQueue<Bundle> mInternalQueue;   //Input/Output blocking queue
 
     public Pipe() {
         mInternalQueue = new LinkedBlockingQueue<Bundle>();
