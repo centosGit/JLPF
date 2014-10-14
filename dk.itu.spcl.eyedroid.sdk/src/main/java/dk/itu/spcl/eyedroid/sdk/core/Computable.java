@@ -1,15 +1,19 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
+import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
+import dk.itu.spcl.eyedroid.sdk.core.pipes.PollingPipe;
+import dk.itu.spcl.eyedroid.sdk.core.pipes.TimeOutPipe;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Computable class defines a filters/pipes processing architecture.
- * The class uses {@link dk.itu.spcl.eyedroid.sdk.core.Filter} and {@link dk.itu.spcl.eyedroid.sdk.core.Pipe}
+ * The class uses {@link dk.itu.spcl.eyedroid.sdk.core.Filter} and {@link dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe}
  * objects to define such structure.
  */
 public class Computable {
@@ -23,8 +27,8 @@ public class Computable {
     public Computable() {
         mFilterList = new ArrayList<Filter>();
         mFilterMap = new HashMap<Integer, Filter>();
-        mPipeSource = new Pipe();
-        mPipeSink = new Pipe();
+        mPipeSink = new BlockingPipe();
+        mPipeSource = new BlockingPipe();
     }
 
     /**
@@ -33,7 +37,6 @@ public class Computable {
      * @return Unmodifiable filter list
      */
     public List<Filter> getFilterList() {
-        setupFilterPipes();
         return Collections.unmodifiableList(mFilterList);
     }
 
@@ -83,7 +86,7 @@ public class Computable {
     }
 
     /**
-     * Clear all {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} objects connecting {@link dk.itu.spcl.eyedroid.sdk.core.Filter}
+     * Clear all {@link BlockingPipe} objects connecting {@link dk.itu.spcl.eyedroid.sdk.core.Filter}
      * object filters.
      */
     public void cleanup() {
@@ -97,11 +100,20 @@ public class Computable {
      * First filter is connected to the core input source.
      * Last filter is connected to the core output sink.
      */
-    private void setupFilterPipes() {
+    public void setupFilterPipes(int numberOfThreads) {
+
         mFilterList.get(0).setInput(mPipeSource);
         mFilterList.get(mFilterList.size() - 1).setOutput(mPipeSink);
         for (int i = 0; i < mFilterList.size() - 1; i++) {
-            Pipe pipe = new Pipe();
+
+            Pipe pipe = null;
+            if( numberOfThreads == 1 ){
+                pipe = new PollingPipe();
+            }else if( numberOfThreads == mFilterList.size() ){
+                pipe = new BlockingPipe();
+            }else{
+                pipe = new TimeOutPipe(10 , TimeUnit.MILLISECONDS);
+            }
             mFilterList.get(i).setOutput(pipe);
             mFilterList.get(i + 1).setInput(pipe);
         }

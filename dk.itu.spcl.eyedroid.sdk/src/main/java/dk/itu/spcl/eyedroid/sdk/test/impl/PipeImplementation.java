@@ -1,4 +1,4 @@
-package dk.itu.spcl.eyedroid.sdk.impl;
+package dk.itu.spcl.eyedroid.sdk.test.impl;
 
 import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
 

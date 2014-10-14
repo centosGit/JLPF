@@ -3,50 +3,35 @@ package dk.itu.spcl.eyedroid.sdk.core;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * Created by centos on 10/14/14.
+ */
 /**
  * Interface that represents a logical link between {@link dk.itu.spcl.eyedroid.sdk.core.Filter} objects.
  * Provides input and output queues for {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} objects for two connected
  * filters.
  */
-public class Pipe {
+public abstract class Pipe {
 
-    protected BlockingQueue<Bundle> mInternalQueue;   //Input/Output blocking queue
+    protected BlockingQueue<Bundle> mInternalQueue;
 
-    public Pipe() {
-        mInternalQueue = new LinkedBlockingQueue<Bundle>();
-    }
 
     /**
      * Push a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object into the pipe.
      *
      * @param bundle
      */
-    public void push(Bundle bundle) {
-        try {
-            mInternalQueue.put(bundle);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
+    public abstract void push(Bundle bundle);
     /**
      * Pop a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object from the pipe.
      */
-    public Bundle pop() {
-        try {
-            return mInternalQueue.take();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return new Bundle();
-        }
-    }
+    public abstract Bundle pop();
 
     /**
      * Cleanup pipe queue content.
      */
-    public void cleanup() {
+    public void cleanup(){
         mInternalQueue.clear();
     }
 }

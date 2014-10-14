@@ -1,6 +1,7 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
+import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
 import junit.framework.TestCase;
 
 public class FilterTest extends TestCase{
@@ -23,8 +24,8 @@ public class FilterTest extends TestCase{
             }
         };
 
-        inputPipe = new Pipe();
-        outputPipe = new Pipe();
+        inputPipe = new BlockingPipe();
+        outputPipe = new BlockingPipe();
     }
 
     @Override

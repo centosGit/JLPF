@@ -9,12 +9,12 @@ import dk.itu.spcl.eyedroid.sdk.common.Bundle;
  */
 public class IORWDefaultImpl implements InputReader, OutputWriter {
 
-    public final IOProtocolReader mReader;   //Reader implementation
-    public final IOProtocolWriter mWriter;   //Writer implementation
+    public final IOProtocolReader protocolReader;   //Reader implementation
+    public final IOProtocolWriter protocolWriter;   //Writer implementation
 
     public IORWDefaultImpl(IOProtocolReader protocolReader, IOProtocolWriter protocolWriter) {
-        mReader = protocolReader;
-        mWriter = protocolWriter;
+        this.protocolReader = protocolReader;
+        this.protocolWriter = protocolWriter;
     }
 
     /**
@@ -24,7 +24,7 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
      */
     @Override
     public Bundle readInput() {
-        return mReader.read();
+        return protocolReader.read();
     }
 
     /**
@@ -34,6 +34,6 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
      */
     @Override
     public void writeOutput(Bundle bundle) {
-        mWriter.write(bundle);
+        protocolWriter.write(bundle);
     }
 }

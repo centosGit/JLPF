@@ -90,6 +90,7 @@ public class ComputableTest extends TestCase {
         setUpComputable1();
         insertFirstBundle("0");
 
+        computable.setupFilterPipes(1);
         computable.getFilterList();
 
         composite1.run();
@@ -104,6 +105,8 @@ public class ComputableTest extends TestCase {
     public void testCoreExecutionOutput() {
         setUpComputable1();
         insertFirstBundle("0");
+
+        computable.setupFilterPipes(1);
 
         computable.getFilterList();
 

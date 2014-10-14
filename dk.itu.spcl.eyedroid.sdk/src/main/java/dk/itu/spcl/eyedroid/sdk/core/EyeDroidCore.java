@@ -1,6 +1,10 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
+import dk.itu.spcl.eyedroid.sdk.core.schedulers.SequentialScheduler;
+import dk.itu.spcl.eyedroid.sdk.core.schedulers.ThreadPoolScheduler;
+
+import java.util.List;
 
 /**
  * EyeDroidCore class is the main implementation of the sdk.
@@ -16,19 +20,36 @@ public class EyeDroidCore {
      * Set the {@link dk.itu.spcl.eyedroid.sdk.core.Scheduler}-{@link dk.itu.spcl.eyedroid.sdk.core.Computable} pair to
      * be executed by the core.
      *
-     * @param scheduler  Defines how a computable is executed
-     * @param computable Defines the filters/pipes processing structure
      */
-    public EyeDroidCore(Scheduler scheduler, Computable computable) {
-        mComputable = computable;
-        mScheduler = scheduler;
+    public EyeDroidCore() {
+        mComputable = new Computable();
+    }
+
+    public boolean addFilter(Filter filter){
+        return mComputable.addFilter(filter);
+    }
+
+    public Filter removeFilter(int id){
+        return mComputable.removeFilter(id);
     }
 
     /**
      * Start {@link dk.itu.spcl.eyedroid.sdk.core.Scheduler} object.
      */
-    public void start() {
-        mScheduler.innerStart();
+    public void start( int numberOfThreads ) throws RuntimeException{
+
+        List<Filter> list = mComputable.getFilterList();
+
+        if( numberOfThreads == 1 )
+            mScheduler = new SequentialScheduler();
+        else if( numberOfThreads <= list.size())
+            mScheduler = new ThreadPoolScheduler(numberOfThreads);
+        else
+            throw new RuntimeException("The requested number of threads is bigger than the number of filters.");
+
+        mComputable.setupFilterPipes(numberOfThreads);
+
+        mScheduler.innerStart(mComputable);
     }
 
     /**
@@ -36,6 +57,7 @@ public class EyeDroidCore {
      */
     public void stop() {
         mScheduler.innerStop();
+        mComputable.cleanup();
     }
 
     /**

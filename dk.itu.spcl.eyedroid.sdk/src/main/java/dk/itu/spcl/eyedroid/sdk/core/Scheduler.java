@@ -6,13 +6,7 @@ package dk.itu.spcl.eyedroid.sdk.core;
  */
 public abstract class Scheduler {
 
-    private Computable mComputable;
     private boolean isRunning;
-
-    public Scheduler(Computable computable) {
-        mComputable = computable;
-    }
-
     /**
      * Get scheduler running state.
      *
@@ -34,7 +28,7 @@ public abstract class Scheduler {
     /**
      * Scheduler start implementation.
      */
-    protected abstract void start();
+    protected abstract void start(Computable computable);
 
     /**
      * Scheduler stop implementation.
@@ -44,25 +38,16 @@ public abstract class Scheduler {
     /**
      * Restart scheduler.
      */
-    public void restart() {
+    public void restart(Computable computable) {
         innerStop();
-        cleanup();
-        innerStart();
+        innerStart(computable);
     }
-
-    /**
-     * Cleanup scheduler content.
-     */
-    public void cleanup() {
-        mComputable.cleanup();
-    }
-
     /**
      * Run scheduler.
      */
-    protected void innerStart() {
+    protected void innerStart(Computable computable) {
         setIsRunning(true);
-        start();
+        start(computable);
     }
 
     /**

@@ -1,6 +1,7 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
+import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
 import dk.itu.spcl.eyedroid.sdk.impl.CompositeImplementation;
 import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
 import junit.framework.TestCase;
@@ -51,8 +52,8 @@ public class FilterCompositeTest extends TestCase{
         filter5 = new FilterImplementation();
         filter5.setFilterName("5");
 
-        inputPipe = new Pipe();
-        outputPipe = new Pipe();
+        inputPipe = new BlockingPipe();
+        outputPipe = new BlockingPipe();
 
         composite.setInput(inputPipe);
         composite.setOutput(outputPipe);

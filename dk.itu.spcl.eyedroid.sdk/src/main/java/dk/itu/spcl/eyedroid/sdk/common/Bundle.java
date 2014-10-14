@@ -8,7 +8,7 @@ import java.util.HashMap;
  * reads and writes {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} objects.
  * Also {@link dk.itu.spcl.eyedroid.sdk.core.Filter} objects communicate by passing
  * {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} objects through the
- * {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} objects.
+ * {@link dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe} objects.
  */
 public class Bundle {
 

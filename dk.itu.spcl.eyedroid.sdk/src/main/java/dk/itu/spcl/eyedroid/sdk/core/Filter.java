@@ -1,10 +1,11 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
+import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
 
 /**
  * Abstract class that defines overall behavior of a processing filter.
- * Each filter is connected to other filters by {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} objects.
+ * Each filter is connected to other filters by {@link dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe} objects.
  * A filter can be single or composed by other filters (composite pattern).
  */
 public abstract class Filter implements Runnable {
@@ -68,7 +69,7 @@ public abstract class Filter implements Runnable {
     }
 
     /**
-     * Define a {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} object as input to the filter.
+     * Define a {@link BlockingPipe} object as input to the filter.
      *
      * @param pipe Link representation between filters
      */
@@ -78,7 +79,7 @@ public abstract class Filter implements Runnable {
     }
 
     /**
-     * Define a {@link dk.itu.spcl.eyedroid.sdk.core.Pipe} object as output of the filter.
+     * Define a {@link BlockingPipe} object as output of the filter.
      *
      * @param pipe Link representation between filters
      */
@@ -114,7 +115,11 @@ public abstract class Filter implements Runnable {
         Bundle outputBundle = null;
         Bundle inputBundle = popFromInput();
 
-        if (inputBundle != null)
+
+
+        if( inputBundle == null )
+            return;
+
             outputBundle = innerExecute(inputBundle);
 
         if (outputBundle != null)
