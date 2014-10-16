@@ -29,3 +29,6 @@ proguard/
 .idea/
 *.iml
 *.iws
+
+# External jars
+lib/

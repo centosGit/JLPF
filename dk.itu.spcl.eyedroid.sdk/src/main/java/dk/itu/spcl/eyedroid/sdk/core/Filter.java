@@ -8,6 +8,7 @@ import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
  * Each filter is connected to other filters by {@link dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe} objects.
  * A filter can be single or composed by other filters (composite pattern).
  */
+
 public abstract class Filter implements Runnable {
 
     private String mFilterName;    //Filter name
@@ -112,10 +113,8 @@ public abstract class Filter implements Runnable {
      */
     @Override
     public void run() {
-        Bundle outputBundle = null;
+        Bundle outputBundle;
         Bundle inputBundle = popFromInput();
-
-
 
         if( inputBundle == null )
             return;

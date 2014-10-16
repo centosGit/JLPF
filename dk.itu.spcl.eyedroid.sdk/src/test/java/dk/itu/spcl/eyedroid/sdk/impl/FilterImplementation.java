@@ -3,9 +3,6 @@ package dk.itu.spcl.eyedroid.sdk.impl;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 import dk.itu.spcl.eyedroid.sdk.core.Filter;
 
-/**
- * Created by centos on 10/13/14.
- */
 public class FilterImplementation extends Filter {
 
     public static final String MESSAGE = "message";

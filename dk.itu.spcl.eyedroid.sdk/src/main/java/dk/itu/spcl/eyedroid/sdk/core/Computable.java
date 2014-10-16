@@ -44,6 +44,7 @@ public class Computable {
      * Add a {@link dk.itu.spcl.eyedroid.sdk.core.Filter} object to the processing structure.
      *
      * @param filter Defines a processing filter (single or composed)
+     * @return Return true if filter added
      */
     public boolean addFilter(Filter filter) {
         if (mFilterMap.containsKey(filter.getFilterId()))
@@ -56,6 +57,7 @@ public class Computable {
     /**
      * Remove a {@link dk.itu.spcl.eyedroid.sdk.core.Filter} object previously added.
      *
+     * @param id Filter id
      * @return Return the removed filter
      */
     public Filter removeFilter(int id) {
@@ -99,6 +101,9 @@ public class Computable {
      * Connect added filters by using pipes.
      * First filter is connected to the core input source.
      * Last filter is connected to the core output sink.
+     * Different pipe types are used in order to optimize the execution according to the number of threads to be used.
+     *
+     * @param numberOfThreads Number of threads to be used to execute the filters
      */
     public void setupFilterPipes(int numberOfThreads) {
 
@@ -106,13 +111,13 @@ public class Computable {
         mFilterList.get(mFilterList.size() - 1).setOutput(mPipeSink);
         for (int i = 0; i < mFilterList.size() - 1; i++) {
 
-            Pipe pipe = null;
-            if( numberOfThreads == 1 ){
+            Pipe pipe;
+            if (numberOfThreads == 1) {
                 pipe = new PollingPipe();
-            }else if( numberOfThreads == mFilterList.size() ){
+            } else if (numberOfThreads == mFilterList.size()) {
                 pipe = new BlockingPipe();
-            }else{
-                pipe = new TimeOutPipe(10 , TimeUnit.MILLISECONDS);
+            } else {
+                pipe = new TimeOutPipe(10, TimeUnit.MILLISECONDS);
             }
             mFilterList.get(i).setOutput(pipe);
             mFilterList.get(i + 1).setInput(pipe);

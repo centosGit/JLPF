@@ -6,9 +6,6 @@ import dk.itu.spcl.eyedroid.sdk.core.FilterComposite;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by centos on 10/13/14.
- */
 public class CompositeImplementation extends FilterComposite {
 
     public int compositeSize(){
@@ -22,5 +19,4 @@ public class CompositeImplementation extends FilterComposite {
     public HashMap<Integer , Filter> getMap(){
         return mFilterMap;
     }
-
 }

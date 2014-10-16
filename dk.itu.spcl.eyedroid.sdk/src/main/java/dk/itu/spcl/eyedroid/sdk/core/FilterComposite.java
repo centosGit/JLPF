@@ -9,7 +9,8 @@ import java.util.LinkedList;
  * Abstract class that defines the behavior of a {@link dk.itu.spcl.eyedroid.sdk.core.Filter}
  * composition (composite pattern).
  */
-public  class FilterComposite extends Filter {
+
+public class FilterComposite extends Filter {
 
     protected LinkedList<Filter> mFilterChildren;     //Contained filters into composition
     protected HashMap<Integer, Filter> mFilterMap;    //Map mFilterChildren replica
@@ -40,6 +41,7 @@ public  class FilterComposite extends Filter {
      * Remove filter from composition
      *
      * @param id Filter id
+     * @return Removed filter
      */
     public Filter removeFilter(int id) {
         if (!hasStarted()) {

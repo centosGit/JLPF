@@ -5,9 +5,13 @@ import dk.itu.spcl.eyedroid.sdk.core.Pipe;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * Blocking pipe implementation. Used when the processing is done by the same number of threads as filters.
+ * Each filter runs in its own thread. By using blocking queues, threads can stand by while waiting for new bundles
+ * to process and therefore reduce resource consumption.
+ */
 
 public class BlockingPipe extends Pipe {
-
 
     public BlockingPipe() {
         mInternalQueue = new LinkedBlockingQueue<Bundle>();
@@ -16,7 +20,7 @@ public class BlockingPipe extends Pipe {
     /**
      * Push a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object into the pipe.
      *
-     * @param bundle
+     * @param bundle Bundle object
      */
     @Override
     public void push(Bundle bundle) {
@@ -29,6 +33,8 @@ public class BlockingPipe extends Pipe {
 
     /**
      * Pop a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object from the pipe.
+     *
+     * @return Bundle object
      */
     @Override
     public Bundle pop() {

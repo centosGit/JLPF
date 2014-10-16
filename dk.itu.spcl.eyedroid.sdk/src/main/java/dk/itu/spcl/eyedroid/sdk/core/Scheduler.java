@@ -4,9 +4,11 @@ package dk.itu.spcl.eyedroid.sdk.core;
  * Abstract class that defines how a {@link dk.itu.spcl.eyedroid.sdk.core.Computable} object must be executed.
  * Used by {@link dk.itu.spcl.eyedroid.sdk.core.EyeDroidCore}.
  */
+
 public abstract class Scheduler {
 
-    private boolean isRunning;
+    private boolean isRunning;      //Scheduler running state
+
     /**
      * Get scheduler running state.
      *
@@ -37,13 +39,18 @@ public abstract class Scheduler {
 
     /**
      * Restart scheduler.
+     *
+     * @param computable Computable object to be executed when restarted
      */
     public void restart(Computable computable) {
         innerStop();
         innerStart(computable);
     }
+
     /**
      * Run scheduler.
+     *
+     * @param computable Computable object to be execute.
      */
     protected void innerStart(Computable computable) {
         setIsRunning(true);

@@ -17,7 +17,6 @@ public class ComputableTest extends TestCase {
 
     CompositeImplementation composite1;
     CompositeImplementation composite2;
-
     ComputableImplementation computable;
 
     public ComputableTest(String name) {
@@ -41,7 +40,6 @@ public class ComputableTest extends TestCase {
 
         composite1 = new CompositeImplementation();
         composite2 = new CompositeImplementation();
-
         computable = new ComputableImplementation();
     }
 
@@ -50,18 +48,13 @@ public class ComputableTest extends TestCase {
         super.tearDown();
     }
 
-
     public void testAddFilter() {
         assertTrue("Filter was not added", computable.addFilter(filter1));
         assertTrue("Computable is not consistent", computable.isConsistent());
-
         assertFalse("Filter was added twice", computable.addFilter(filter1));
-
         assertTrue("Filter was not added", computable.addFilter(filter2));
-
         assertTrue("Computable is not consistent", computable.isConsistent());
         assertEquals("Size of computable is not right", 2, computable.getComputableSize());
-
     }
 
     public void testRemoveFilter() {
@@ -73,50 +66,40 @@ public class ComputableTest extends TestCase {
         assertTrue("Computable is not consistent", computable.isConsistent());
         assertEquals("Size of computable is not right", 2, computable.getComputableSize());
 
-
         assertNull("Filter was not removed", computable.removeFilter(filter1.getFilterId()));
         assertTrue("Computable is not consistent", computable.isConsistent());
         assertEquals("Size of computable is not right", 2, computable.getComputableSize());
 
-
         assertNotNull("Filter was not removed", computable.removeFilter(filter2.getFilterId()));
         assertTrue("Computable is not consistent", computable.isConsistent());
         assertEquals("Size of computable is not right", 1, computable.getComputableSize());
-
     }
 
     public void testFilterOrder() {
-
         setUpComputable1();
         insertFirstBundle("0");
 
         computable.setupFilterPipes(1);
         computable.getFilterList();
-
         composite1.run();
 
         Bundle bundle = computable.popFromSink();
-        assertEquals("Computable execution order is not correct",
-                "012345", ((String) bundle.get(FilterImplementation.MESSAGE)));
-
+        assertEquals("Computable execution order is not correct","012345",
+                ((String) bundle.get(FilterImplementation.MESSAGE)));
     }
-
 
     public void testCoreExecutionOutput() {
         setUpComputable1();
         insertFirstBundle("0");
 
         computable.setupFilterPipes(1);
-
         computable.getFilterList();
-
         composite1.run();
-        assertNotNull("Output of core is null", computable.popFromSink());
 
+        assertNotNull("Output of core is null", computable.popFromSink());
     }
 
     public void testCleanUp() {
-
         setUpComputable2();
         insertFirstBundle("");
         insertFirstBundle("");
@@ -149,13 +132,10 @@ public class ComputableTest extends TestCase {
 
         computable.cleanup();
 
-        assertEquals("Pipe is not cleanedup", 0, pipe1.getPipeSize());
-        assertEquals("Pipe is not cleanedup", 0, pipe2.getPipeSize());
-        assertEquals("Pipe is not cleanedup", 0, pipe3.getPipeSize());
-
-
+        assertEquals("Pipe is not cleaned up", 0, pipe1.getPipeSize());
+        assertEquals("Pipe is not cleaned up", 0, pipe2.getPipeSize());
+        assertEquals("Pipe is not cleaned up", 0, pipe3.getPipeSize());
     }
-
 
     private void insertFirstBundle(String message) {
         Bundle bundle = new Bundle();
@@ -163,9 +143,7 @@ public class ComputableTest extends TestCase {
         computable.pushToSource(bundle);
     }
 
-
     private void setUpComputable1() {
-
         composite1.addFilter(filter1);
         composite1.addFilter(filter2);
         composite1.addFilter(filter3);
@@ -176,12 +154,9 @@ public class ComputableTest extends TestCase {
     }
 
     private void setUpComputable2() {
-
         computable.addFilter(filter1);
         computable.addFilter(filter2);
         computable.addFilter(filter3);
         computable.addFilter(filter4);
     }
-
-
 }

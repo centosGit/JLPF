@@ -7,9 +7,6 @@ import dk.itu.spcl.eyedroid.sdk.core.Pipe;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by centos on 10/13/14.
- */
 public class ComputableImplementation extends Computable {
 
     public int getComputableSize(){
@@ -35,5 +32,4 @@ public class ComputableImplementation extends Computable {
     public Pipe getSink(){
         return mPipeSink;
     }
-
 }

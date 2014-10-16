@@ -8,19 +8,23 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * Created by centos on 10/13/14.
+ * Sequential scheduler implementation. Executes sequentially (in the same thread) every filter given by the computable
+ * object.
  */
+
 public class SequentialScheduler extends Scheduler {
 
-    private ExecutorService mExecutor;
-    private List<Filter> mFilterList;
+    private ExecutorService mExecutor;  //Main executor
 
+    /**
+     * Execute {@link dk.itu.spcl.eyedroid.sdk.core.Computable} instance.
+     * @param computable Computable object containing the filter structure.
+     */
     @Override
     protected void start(Computable computable) {
 
         mExecutor = Executors.newSingleThreadExecutor();
-        mFilterList = computable.getFilterList();
-
+        final List<Filter> mFilterList = computable.getFilterList();
 
         Runnable runnable = new Runnable() {
             @Override
@@ -29,14 +33,15 @@ public class SequentialScheduler extends Scheduler {
                     for (final Filter filter : mFilterList) {
                         filter.run();
                     }
-
                 }
             }
         };
-
         mExecutor.execute(runnable);
     }
 
+    /**
+     * Stop current scheduler
+     */
     @Override
     protected void stop() {
         mExecutor.shutdownNow();

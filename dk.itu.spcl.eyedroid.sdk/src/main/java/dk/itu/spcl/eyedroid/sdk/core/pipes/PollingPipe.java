@@ -6,19 +6,32 @@ import dk.itu.spcl.eyedroid.sdk.core.Pipe;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
- * Created by centos on 10/14/14.
+ * Polling pipe implementation. Used when the processing is done sequentially (all the filters are executed
+ * by the same thread). No need of blocking is needed because a filter is executed always after a bundle is
+ * produced by the previous one.
  */
+
 public class PollingPipe extends Pipe {
 
-    public PollingPipe(){
+    public PollingPipe() {
         mInternalQueue = new LinkedBlockingDeque<Bundle>();
     }
 
+    /**
+     * Push a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object into the pipe.
+     *
+     * @param bundle Bundle object
+     */
     @Override
     public void push(Bundle bundle) {
         mInternalQueue.offer(bundle);
     }
 
+    /**
+     * Pop a {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} object from the pipe.
+     *
+     * @return Bundle object
+     */
     @Override
     public Bundle pop() {
         return mInternalQueue.poll();

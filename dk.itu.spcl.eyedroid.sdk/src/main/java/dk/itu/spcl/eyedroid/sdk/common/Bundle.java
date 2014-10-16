@@ -12,21 +12,29 @@ import java.util.HashMap;
  */
 public class Bundle {
 
-    private HashMap<String , Object> mMap;                  //Map object container
-    /**
-     *
-     */
-    public Bundle(){ mMap = new HashMap<String, Object>();}
+    private HashMap<String, Object> mMap;   //Map object container
+
+    public Bundle() {
+        mMap = new HashMap<String, Object>();
+    }
+
     /**
      * Put key-value object.
-     * @param key Object key
+     *
+     * @param key   Object key
      * @param value Object value
      */
-    public void put( String key , Object value ){ mMap.put(key , value);}
+    public void put(String key, Object value) {
+        mMap.put(key, value);
+    }
+
     /**
      * Get value from specified key.
+     *
      * @param key Object key
      * @return Object value
      */
-    public Object get( String key ){ return mMap.get(key);}
+    public Object get(String key) {
+        return mMap.get(key);
+    }
 }
