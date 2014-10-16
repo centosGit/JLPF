@@ -58,8 +58,8 @@ public class EyeDroidCore {
 
         if (numberOfThreads == 1)
             mScheduler = new SequentialScheduler();
-        else if (numberOfThreads <= list.size())
-            mScheduler = new ThreadPoolScheduler(numberOfThreads);
+        else if (numberOfThreads == list.size())
+            mScheduler = new ThreadPerFilterScheduler();
         else
             throw new RuntimeException("Number of threads is wrong");
 

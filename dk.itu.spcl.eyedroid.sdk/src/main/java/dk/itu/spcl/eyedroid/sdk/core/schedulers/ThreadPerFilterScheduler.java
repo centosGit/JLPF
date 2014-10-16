@@ -17,10 +17,6 @@ public class ThreadPerFilterScheduler extends Scheduler {
     protected int mSize;                 //Thread pool size
     protected ExecutorService mExecutor; //Main executor
 
-    public ThreadPoolScheduler(int size) {
-        mSize = size;
-    }
-
     /**
      * Execute {@link dk.itu.spcl.eyedroid.sdk.core.Computable} instance.
      *
