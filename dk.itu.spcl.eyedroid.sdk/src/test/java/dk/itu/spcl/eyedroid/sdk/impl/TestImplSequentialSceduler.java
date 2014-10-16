@@ -6,7 +6,7 @@ import dk.itu.spcl.eyedroid.sdk.core.schedulers.SequentialScheduler;
 /**
  * Created by centos on 10/16/14.
  */
-public class SequentialScedulerTestImpl extends SequentialScheduler{
+public class TestImplSequentialSceduler extends SequentialScheduler{
 
 
     public void startScheduler( Computable computable){

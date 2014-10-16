@@ -1,7 +1,7 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
-import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplFilter;
 import junit.framework.TestCase;
 
 /**
@@ -9,26 +9,26 @@ import junit.framework.TestCase;
  */
 public class EyeDroidCoreTest extends TestCase {
 
-    FilterImplementation filter1;
-    FilterImplementation filter2;
-    FilterImplementation filter3;
-    FilterImplementation filter4;
-    FilterImplementation filter5;
+    TestImplFilter filter1;
+    TestImplFilter filter2;
+    TestImplFilter filter3;
+    TestImplFilter filter4;
+    TestImplFilter filter5;
 
     EyeDroidCore core;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        filter1 = new FilterImplementation();
+        filter1 = new TestImplFilter();
         filter1.setFilterName("1");
-        filter2 = new FilterImplementation();
+        filter2 = new TestImplFilter();
         filter2.setFilterName("2");
-        filter3 = new FilterImplementation();
+        filter3 = new TestImplFilter();
         filter3.setFilterName("3");
-        filter4 = new FilterImplementation();
+        filter4 = new TestImplFilter();
         filter4.setFilterName("4");
-        filter5 = new FilterImplementation();
+        filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
         core = new EyeDroidCore();
@@ -51,7 +51,7 @@ public class EyeDroidCoreTest extends TestCase {
 
     private void insertBundle(String message){
         Bundle bundle = new Bundle();
-        bundle.put(FilterImplementation.MESSAGE , message);
+        bundle.put(TestImplFilter.MESSAGE , message);
         core.pushBundle(bundle);
 
     }
@@ -99,7 +99,7 @@ public class EyeDroidCoreTest extends TestCase {
 
         Bundle bundle = core.popBundle();
 
-        assertEquals("Output is in wrong order" , "012345" , bundle.get(FilterImplementation.MESSAGE));
+        assertEquals("Output is in wrong order" , "012345" , bundle.get(TestImplFilter.MESSAGE));
     }
 
 

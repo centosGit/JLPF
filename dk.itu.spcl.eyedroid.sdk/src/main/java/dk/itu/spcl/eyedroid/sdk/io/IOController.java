@@ -10,8 +10,8 @@ import dk.itu.spcl.eyedroid.sdk.core.EyeDroidCore;
  */
 public abstract class IOController {
 
-    public final InputReader InputReader;       //Associated bundle input reader
-    public final OutputWriter OutputWriter;     //Associated bundle output writer
+    private final InputReader InputReader;       //Associated bundle input reader
+    private final OutputWriter OutputWriter;     //Associated bundle output writer
     private final EyeDroidCore mCore;           //EyeDroid core instance
     private boolean isRunning;                  //IO controller state
 
@@ -40,7 +40,7 @@ public abstract class IOController {
     /**
      * Sets IOController running state.
      */
-    private boolean seIsStarted(boolean is) {
+    private boolean setIsStarted(boolean is) {
         return isRunning = is;
     }
 
@@ -49,9 +49,9 @@ public abstract class IOController {
      * It will start any threads used by the controller and then the actual
      * reading and writing will start
      */
-    public void start() {
+    public void start(){
         init();
-        seIsStarted(true);
+        setIsStarted(true);
         onExecute();
     }
 
@@ -61,17 +61,25 @@ public abstract class IOController {
      */
     public void stop() {
         onStop();
-        seIsStarted(false);
+        cleanupIO();
+        setIsStarted(false);
     }
 
     /**
      * This method will restart the controller. If the controller has already started it will
-     * first stop it and then start it again.
+     * first stop, cleanup and then start it again.
      */
     public void restart() {
         stop();
-        cleanup();
         start();
+    }
+
+    /**
+     * Called after Stop method. Cleans up IO protocols.
+     */
+    private void cleanupIO(){
+        InputReader.cleanup();
+        OutputWriter.cleanup();
     }
 
     /**
@@ -97,17 +105,11 @@ public abstract class IOController {
     /**
      * This method should should contain the main execution of the controller.
      */
-    public abstract void onExecute();
+    protected abstract void onExecute();
 
     /**
      * This method should be used to stop current execution.
      */
-    public abstract void onStop();
-
-    /**
-     * This method should be used to cleanup.
-     * I.e. Cleanup IO protocols.
-     */
-    public abstract void cleanup();
+    protected abstract void onStop();
 }
 

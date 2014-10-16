@@ -7,7 +7,7 @@ import dk.itu.spcl.eyedroid.sdk.core.Pipe;
 import java.util.List;
 import java.util.Map;
 
-public class ComputableImplementation extends Computable {
+public class TestImplComputable extends Computable {
 
     public int getComputableSize(){
         return mFilterList.size();

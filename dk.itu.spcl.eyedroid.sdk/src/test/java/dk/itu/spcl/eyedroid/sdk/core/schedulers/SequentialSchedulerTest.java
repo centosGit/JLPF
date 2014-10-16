@@ -1,9 +1,9 @@
 package dk.itu.spcl.eyedroid.sdk.core.schedulers;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
-import dk.itu.spcl.eyedroid.sdk.impl.ComputableImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.SequentialScedulerTestImpl;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplComputable;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplFilter;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplSequentialSceduler;
 import junit.framework.TestCase;
 
 /**
@@ -12,14 +12,14 @@ import junit.framework.TestCase;
 public class SequentialSchedulerTest extends TestCase {
 
 
-    SequentialScedulerTestImpl scheduler;
-    FilterImplementation filter1;
-    FilterImplementation filter2;
-    FilterImplementation filter3;
-    FilterImplementation filter4;
-    FilterImplementation filter5;
+    TestImplSequentialSceduler scheduler;
+    TestImplFilter filter1;
+    TestImplFilter filter2;
+    TestImplFilter filter3;
+    TestImplFilter filter4;
+    TestImplFilter filter5;
 
-    ComputableImplementation computable;
+    TestImplComputable computable;
 
 
     public SequentialSchedulerTest(String name) {
@@ -30,18 +30,18 @@ public class SequentialSchedulerTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        filter1 = new FilterImplementation();
+        filter1 = new TestImplFilter();
         filter1.setFilterName("1");
-        filter2 = new FilterImplementation();
+        filter2 = new TestImplFilter();
         filter2.setFilterName("2");
-        filter3 = new FilterImplementation();
+        filter3 = new TestImplFilter();
         filter3.setFilterName("3");
-        filter4 = new FilterImplementation();
+        filter4 = new TestImplFilter();
         filter4.setFilterName("4");
-        filter5 = new FilterImplementation();
+        filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        computable = new ComputableImplementation();
+        computable = new TestImplComputable();
 
         computable.addFilter(filter1);
         computable.addFilter(filter2);
@@ -51,7 +51,7 @@ public class SequentialSchedulerTest extends TestCase {
 
         computable.setupFilterPipes(1);
 
-        scheduler = new SequentialScedulerTestImpl();
+        scheduler = new TestImplSequentialSceduler();
 
 
     }
@@ -63,7 +63,7 @@ public class SequentialSchedulerTest extends TestCase {
 
     private void insertBundle(String message){
         Bundle bundle = new Bundle();
-        bundle.put(FilterImplementation.MESSAGE , message);
+        bundle.put(TestImplFilter.MESSAGE , message);
         computable.pushToSource(bundle);
 
     }
@@ -94,7 +94,7 @@ public class SequentialSchedulerTest extends TestCase {
         insertBundle("0");
         Bundle bundle = computable.popFromSink();
         assertNotNull("Bundle is null" , bundle);
-        assertEquals("Execution order is wrong" , "012345" , (String)bundle.get(FilterImplementation.MESSAGE));
+        assertEquals("Execution order is wrong" , "012345" , (String)bundle.get(TestImplFilter.MESSAGE));
     }
 
 

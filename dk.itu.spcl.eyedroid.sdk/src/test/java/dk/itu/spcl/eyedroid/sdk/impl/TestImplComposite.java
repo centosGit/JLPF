@@ -6,7 +6,7 @@ import dk.itu.spcl.eyedroid.sdk.core.FilterComposite;
 import java.util.HashMap;
 import java.util.List;
 
-public class CompositeImplementation extends FilterComposite {
+public class TestImplComposite extends FilterComposite {
 
     public int compositeSize(){
         return mFilterChildren.size();

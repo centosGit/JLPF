@@ -15,4 +15,9 @@ public interface InputReader {
      * @return {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} the last bundle that was read.
      */
     public Bundle readInput();
+
+    /**
+     * Cleanup method
+     */
+    public void cleanup();
 }

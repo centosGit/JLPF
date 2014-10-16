@@ -18,4 +18,9 @@ public interface OutputWriter {
      * @param {@link dk.itu.spcl.eyedroid.sdk.common.Bundle} the next processed Bundle
      */
     public void writeOutput(Bundle bundle);
+
+    /**
+     * Cleanup method
+     */
+    public void cleanup();
 }

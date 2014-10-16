@@ -1,10 +1,10 @@
 package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
-import dk.itu.spcl.eyedroid.sdk.impl.CompositeImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.ComputableImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.PipeImplementation;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplComposite;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplComputable;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplFilter;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplPipe;
 import junit.framework.TestCase;
 
 public class ComputableTest extends TestCase {
@@ -15,9 +15,9 @@ public class ComputableTest extends TestCase {
     Filter filter4;
     Filter filter5;
 
-    CompositeImplementation composite1;
-    CompositeImplementation composite2;
-    ComputableImplementation computable;
+    TestImplComposite composite1;
+    TestImplComposite composite2;
+    TestImplComputable computable;
 
     public ComputableTest(String name) {
         super(name);
@@ -27,20 +27,20 @@ public class ComputableTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        filter1 = new FilterImplementation();
+        filter1 = new TestImplFilter();
         filter1.setFilterName("1");
-        filter2 = new FilterImplementation();
+        filter2 = new TestImplFilter();
         filter2.setFilterName("2");
-        filter3 = new FilterImplementation();
+        filter3 = new TestImplFilter();
         filter3.setFilterName("3");
-        filter4 = new FilterImplementation();
+        filter4 = new TestImplFilter();
         filter4.setFilterName("4");
-        filter5 = new FilterImplementation();
+        filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        composite1 = new CompositeImplementation();
-        composite2 = new CompositeImplementation();
-        computable = new ComputableImplementation();
+        composite1 = new TestImplComposite();
+        composite2 = new TestImplComposite();
+        computable = new TestImplComputable();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class ComputableTest extends TestCase {
 
         Bundle bundle = computable.popFromSink();
         assertEquals("Computable execution order is not correct","012345",
-                ((String) bundle.get(FilterImplementation.MESSAGE)));
+                ((String) bundle.get(TestImplFilter.MESSAGE)));
     }
 
     public void testCoreExecutionOutput() {
@@ -104,9 +104,9 @@ public class ComputableTest extends TestCase {
         insertFirstBundle("");
         insertFirstBundle("");
 
-        PipeImplementation pipe1 = new PipeImplementation();
-        PipeImplementation pipe2 = new PipeImplementation();
-        PipeImplementation pipe3 = new PipeImplementation();
+        TestImplPipe pipe1 = new TestImplPipe();
+        TestImplPipe pipe2 = new TestImplPipe();
+        TestImplPipe pipe3 = new TestImplPipe();
 
         filter1.setInput(computable.getSource());
         filter1.setOutput(pipe1);
@@ -139,7 +139,7 @@ public class ComputableTest extends TestCase {
 
     private void insertFirstBundle(String message) {
         Bundle bundle = new Bundle();
-        bundle.put(FilterImplementation.MESSAGE, message);
+        bundle.put(TestImplFilter.MESSAGE, message);
         computable.pushToSource(bundle);
     }
 

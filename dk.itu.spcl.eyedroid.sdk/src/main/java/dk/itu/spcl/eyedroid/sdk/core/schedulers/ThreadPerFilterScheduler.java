@@ -46,6 +46,5 @@ public class ThreadPerFilterScheduler extends Scheduler {
     @Override
     protected void stop() {
         mExecutor.shutdownNow();
-
     }
 }

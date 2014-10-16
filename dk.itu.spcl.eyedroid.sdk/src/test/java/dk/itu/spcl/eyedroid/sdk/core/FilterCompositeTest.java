@@ -2,8 +2,8 @@ package dk.itu.spcl.eyedroid.sdk.core;
 
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 import dk.itu.spcl.eyedroid.sdk.core.pipes.BlockingPipe;
-import dk.itu.spcl.eyedroid.sdk.impl.CompositeImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplComposite;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplFilter;
 import junit.framework.TestCase;
 
 public class FilterCompositeTest extends TestCase {
@@ -17,7 +17,7 @@ public class FilterCompositeTest extends TestCase {
     Pipe inputPipe;
     Pipe outputPipe;
 
-    CompositeImplementation composite;
+    TestImplComposite composite;
     FilterComposite innerComposite;
 
     public FilterCompositeTest(String name) {
@@ -28,22 +28,22 @@ public class FilterCompositeTest extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        composite = new CompositeImplementation();
+        composite = new TestImplComposite();
         innerComposite = new FilterComposite();
 
-        filter1 = new FilterImplementation();
+        filter1 = new TestImplFilter();
         filter1.setFilterName("1");
 
-        filter2 = new FilterImplementation();
+        filter2 = new TestImplFilter();
         filter2.setFilterName("2");
 
-        filter3 = new FilterImplementation();
+        filter3 = new TestImplFilter();
         filter3.setFilterName("3");
 
-        filter4 = new FilterImplementation();
+        filter4 = new TestImplFilter();
         filter4.setFilterName("4");
 
-        filter5 = new FilterImplementation();
+        filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
         inputPipe = new BlockingPipe();
@@ -145,7 +145,7 @@ public class FilterCompositeTest extends TestCase {
         composite.addFilter(filter5);
 
         Bundle bundle = new Bundle();
-        bundle.put(FilterImplementation.MESSAGE, "0");
+        bundle.put(TestImplFilter.MESSAGE, "0");
 
         inputPipe.push(bundle);
 
@@ -156,7 +156,7 @@ public class FilterCompositeTest extends TestCase {
         assertNotNull("Bundle in output is null", bundle);
 
         assertEquals("Execution order in composite is not correct", "012345",
-                ((String) bundle.get(FilterImplementation.MESSAGE)));
+                ((String) bundle.get(TestImplFilter.MESSAGE)));
     }
 
     public void testStartMode() {
@@ -168,7 +168,7 @@ public class FilterCompositeTest extends TestCase {
         composite.addFilter(filter5);
 
         Bundle bundle = new Bundle();
-        bundle.put(FilterImplementation.MESSAGE, "0");
+        bundle.put(TestImplFilter.MESSAGE, "0");
 
         inputPipe.push(bundle);
         composite.run();
