@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
  * Parallel scheduler implementation. Executes filters in a customizable size thread pool.
  */
 
-public class ThreadPoolScheduler extends Scheduler {
+public class ThreadPerFilterScheduler extends Scheduler {
 
     protected int mSize;                 //Thread pool size
     protected ExecutorService mExecutor; //Main executor

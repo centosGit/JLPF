@@ -27,7 +27,8 @@ public class BlockingPipe extends Pipe {
         try {
             mInternalQueue.put(bundle);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            //TODO check dat
+//            e.printStackTrace();
         }
     }
 
@@ -41,6 +42,7 @@ public class BlockingPipe extends Pipe {
         try {
             return mInternalQueue.take();
         } catch (InterruptedException e) {
+            //TODO check dat
             return null;
         }
     }

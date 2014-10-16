@@ -3,16 +3,16 @@ package dk.itu.spcl.eyedroid.sdk.core.schedulers;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 import dk.itu.spcl.eyedroid.sdk.impl.ComputableImplementation;
 import dk.itu.spcl.eyedroid.sdk.impl.FilterImplementation;
-import dk.itu.spcl.eyedroid.sdk.impl.SequentialScedulerTestImpl;
+import dk.itu.spcl.eyedroid.sdk.impl.ThreadPerFilterSchedulerTestImpl;
 import junit.framework.TestCase;
 
 /**
  * Created by centos on 10/14/14.
  */
-public class SequentialSchedulerTest extends TestCase {
+public class ThreadPoolSchedulerTest extends TestCase {
 
 
-    SequentialScedulerTestImpl scheduler;
+    ThreadPerFilterSchedulerTestImpl scheduler;
     FilterImplementation filter1;
     FilterImplementation filter2;
     FilterImplementation filter3;
@@ -21,8 +21,9 @@ public class SequentialSchedulerTest extends TestCase {
 
     ComputableImplementation computable;
 
+    final int THREADS = 5;
 
-    public SequentialSchedulerTest(String name) {
+    public ThreadPoolSchedulerTest(String name) {
         super(name);
     }
 
@@ -51,7 +52,7 @@ public class SequentialSchedulerTest extends TestCase {
 
         computable.setupFilterPipes(1);
 
-        scheduler = new SequentialScedulerTestImpl();
+        scheduler = new ThreadPerFilterSchedulerTestImpl();
 
 
     }
@@ -68,17 +69,18 @@ public class SequentialSchedulerTest extends TestCase {
 
     }
 
-    public void testStartSequential(){
+    public void testStartThreadPool(){
         scheduler.startScheduler(computable);
         insertBundle("0");
         assertNotNull("Output bundle is null", computable.popFromSink());
     }
 
-    public void testOnlyOneThreadRuns(){
+    public void testNumberOfThreadsRunning(){
+
         int beforeNumThreads = Thread.activeCount();
         scheduler.startScheduler(computable);
         insertBundle("0");
-        assertEquals("Number of threads started is not 1" , beforeNumThreads + 1 , Thread.activeCount());
+        assertEquals("Number of threads started is not " + String.valueOf(THREADS) , beforeNumThreads + THREADS , Thread.activeCount());
         scheduler.stop();
         try {
             Thread.sleep(1000);
@@ -87,7 +89,6 @@ public class SequentialSchedulerTest extends TestCase {
         }
         assertEquals("Scheduler thread is still running" , beforeNumThreads , Thread.activeCount());
     }
-
 
     public void testOrderOfBundles(){
         scheduler.startScheduler(computable);
