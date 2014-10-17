@@ -3,6 +3,7 @@ package dk.itu.spcl.eyedroid.sdk.core;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 import dk.itu.spcl.eyedroid.sdk.core.schedulers.SequentialScheduler;
 import dk.itu.spcl.eyedroid.sdk.core.schedulers.ThreadPerFilterScheduler;
+import dk.itu.spcl.eyedroid.sdk.core.schedulers.ThreadPoolScheduler;
 
 import java.util.List;
 
@@ -60,6 +61,8 @@ public class EyeDroidCore {
             mScheduler = new SequentialScheduler();
         else if (numberOfThreads == list.size())
             mScheduler = new ThreadPerFilterScheduler();
+        else if( numberOfThreads > 1 && numberOfThreads < list.size() )
+            mScheduler = new ThreadPoolScheduler(numberOfThreads);
         else
             throw new RuntimeException("Number of threads is wrong");
 

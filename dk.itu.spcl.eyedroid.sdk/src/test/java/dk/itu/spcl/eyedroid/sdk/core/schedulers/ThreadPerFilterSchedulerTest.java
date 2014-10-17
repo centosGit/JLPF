@@ -3,16 +3,16 @@ package dk.itu.spcl.eyedroid.sdk.core.schedulers;
 import dk.itu.spcl.eyedroid.sdk.common.Bundle;
 import dk.itu.spcl.eyedroid.sdk.impl.TestImplComputable;
 import dk.itu.spcl.eyedroid.sdk.impl.TestImplFilter;
-import dk.itu.spcl.eyedroid.sdk.impl.TestImplThreadPoolScheduler;
+import dk.itu.spcl.eyedroid.sdk.impl.TestImplThreadPerFilterScheduler;
 import junit.framework.TestCase;
 
 /**
- * Created by centos on 10/17/14.
+ * Created by centos on 10/14/14.
  */
-public class ThreadPoolSchedulerTest extends TestCase {
+public class ThreadPerFilterSchedulerTest extends TestCase {
 
 
-    TestImplThreadPoolScheduler scheduler;
+    TestImplThreadPerFilterScheduler scheduler;
     TestImplFilter filter1;
     TestImplFilter filter2;
     TestImplFilter filter3;
@@ -23,13 +23,14 @@ public class ThreadPoolSchedulerTest extends TestCase {
 
     final int THREADS = 5;
 
-    public ThreadPoolSchedulerTest(String name) {
+    public ThreadPerFilterSchedulerTest(String name) {
         super(name);
     }
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
         filter1 = new TestImplFilter();
         filter1.setFilterName("1");
         filter2 = new TestImplFilter();
@@ -49,6 +50,10 @@ public class ThreadPoolSchedulerTest extends TestCase {
         computable.addFilter(filter4);
         computable.addFilter(filter5);
 
+        computable.setupFilterPipes(1);
+
+        scheduler = new TestImplThreadPerFilterScheduler();
+
 
     }
 
@@ -57,39 +62,41 @@ public class ThreadPoolSchedulerTest extends TestCase {
         super.tearDown();
     }
 
-    public void createScheduler(int threads) {
-        computable.setupFilterPipes(threads);
-        scheduler = new TestImplThreadPoolScheduler(threads);
-    }
-
-
-    private void insertBundle(String message) {
+    private void insertBundle(String message){
         Bundle bundle = new Bundle();
-        bundle.put(TestImplFilter.MESSAGE, message);
+        bundle.put(TestImplFilter.MESSAGE , message);
         computable.pushToSource(bundle);
 
     }
 
-    public void testStartThreadPool() {
-        createScheduler(2);
+    public void testStartThreadPool(){
         scheduler.startScheduler(computable);
         insertBundle("0");
         assertNotNull("Output bundle is null", computable.popFromSink());
     }
 
-    public void testOrderOfBundles() {
-        createScheduler(4);
+    public void testNumberOfThreadsRunning(){
 
-        for (int i = 0; i < 100; i++)
-            insertBundle("0");
-
+        int beforeNumThreads = Thread.activeCount();
         scheduler.startScheduler(computable);
-
-        Bundle bundle = null;
-        for (int i = 0; i < 100; i++)
-            bundle = computable.popFromSink();
-        assertNotNull("Bundle is null", bundle);
-        assertEquals("Execution order is wrong", "012345", (String) bundle.get(TestImplFilter.MESSAGE));
+        insertBundle("0");
+        assertEquals("Number of threads started is not " + String.valueOf(THREADS) , beforeNumThreads + THREADS , Thread.activeCount());
+        scheduler.stop();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals("Scheduler thread is still running" , beforeNumThreads , Thread.activeCount());
     }
+
+    public void testOrderOfBundles(){
+        scheduler.startScheduler(computable);
+        insertBundle("0");
+        Bundle bundle = computable.popFromSink();
+        assertNotNull("Bundle is null" , bundle);
+        assertEquals("Execution order is wrong" , "012345" , (String)bundle.get(TestImplFilter.MESSAGE));
+    }
+
 
 }

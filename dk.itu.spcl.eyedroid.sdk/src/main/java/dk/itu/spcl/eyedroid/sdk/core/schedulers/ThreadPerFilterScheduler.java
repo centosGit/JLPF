@@ -14,7 +14,6 @@ import java.util.concurrent.Executors;
 
 public class ThreadPerFilterScheduler extends Scheduler {
 
-    protected int mSize;                 //Thread pool size
     protected ExecutorService mExecutor; //Main executor
 
     /**
