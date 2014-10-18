@@ -2,6 +2,8 @@ package dk.itu.spcl.jlpf.io;
 
 import dk.itu.spcl.jlpf.core.ProcessingCore;
 
+import java.io.IOException;
+
 /**
  * This class is the main class for input/output to the core.
  * Classes that inherit should provide proper implementations for most of the methods.
@@ -85,14 +87,14 @@ public abstract class IOController {
     /**
      * Read from input and queue bundle for processing into the core,
      */
-    public void read() {
+    public void read() throws IOException{
         mCore.pushBundle(InputReader.readInput());
     }
 
     /**
      * Pop processed bundle from core and write into output.
      */
-    public void write() {
+    public void write() throws IOException{
         OutputWriter.writeOutput(mCore.popBundle());
     }
 

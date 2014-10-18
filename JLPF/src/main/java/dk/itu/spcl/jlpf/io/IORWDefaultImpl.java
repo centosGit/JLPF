@@ -2,6 +2,8 @@ package dk.itu.spcl.jlpf.io;
 
 import dk.itu.spcl.jlpf.common.Bundle;
 
+import java.io.IOException;
+
 /**
  * This class is a convenient default implementation that acts both as a
  * {@link dk.itu.spcl.jlpf.io.InputReader} and a {@link dk.itu.spcl.jlpf.io.OutputWriter}.
@@ -25,7 +27,7 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
      * @return Wrapping bundle object
      */
     @Override
-    public Bundle readInput() {
+    public Bundle readInput() throws IOException{
         return protocolReader.read();
     }
 
@@ -35,7 +37,7 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
      * @param bundle Wrapping bundle object
      */
     @Override
-    public void writeOutput(Bundle bundle) {
+    public void writeOutput(Bundle bundle) throws IOException{
         protocolWriter.write(bundle);
     }
 

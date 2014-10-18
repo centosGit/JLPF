@@ -2,6 +2,8 @@ package dk.itu.spcl.jlpf.io;
 
 import dk.itu.spcl.jlpf.common.Bundle;
 
+import java.io.IOException;
+
 /**
  * Interface used to implement a specific reader. Implementations of this interface
  * do not perform the actual reading but the task is delegated to {@link dk.itu.spcl.jlpf.io.IOProtocolReader}.
@@ -14,7 +16,7 @@ public interface InputReader {
      *
      * @return {@link dk.itu.spcl.jlpf.common.Bundle} the last bundle that was read.
      */
-    public Bundle readInput();
+    public Bundle readInput() throws IOException;
 
     /**
      * Cleanup method

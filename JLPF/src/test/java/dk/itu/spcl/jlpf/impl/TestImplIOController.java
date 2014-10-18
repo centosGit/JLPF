@@ -5,6 +5,8 @@ import dk.itu.spcl.jlpf.io.InputReader;
 import dk.itu.spcl.jlpf.io.OutputWriter;
 import dk.itu.spcl.jlpf.io.IOController;
 
+import java.io.IOException;
+
 public class TestImplIOController extends IOController{
 
     public TestImplIOController(ProcessingCore core, InputReader reader, OutputWriter writer){
@@ -18,14 +20,19 @@ public class TestImplIOController extends IOController{
 
     @Override
     public void onExecute(){
-        super.read();
-        super.read();
-        super.read();
-        super.read();
-        super.write();
-        super.write();
-        super.write();
-        super.write();
+        try{
+            super.read();
+            super.read();
+            super.read();
+            super.read();
+            super.write();
+            super.write();
+            super.write();
+            super.write();
+
+        }catch (IOException e){
+
+        }
     }
 
     @Override

@@ -2,6 +2,8 @@ package dk.itu.spcl.jlpf.io;
 
 import dk.itu.spcl.jlpf.common.Bundle;
 
+import java.io.IOException;
+
 /**
  * Base interface for every object that wants to act as a {@link dk.itu.spcl.jlpf.io.OutputWriter}
  * This class should be passed to a {@link dk.itu.spcl.jlpf.io.OutputWriter} instance and used by the
@@ -15,5 +17,5 @@ public interface IOProtocolWriter extends IOProtocol {
      *
      * @param bundle the proccesed {@link dk.itu.spcl.jlpf.common.Bundle} to be written to the output.
      * */
-    public void write( Bundle bundle );
+    public void write( Bundle bundle ) throws IOException;
 }
