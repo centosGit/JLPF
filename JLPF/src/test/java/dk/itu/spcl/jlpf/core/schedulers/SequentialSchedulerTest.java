@@ -6,11 +6,7 @@ import dk.itu.spcl.jlpf.impl.TestImplFilter;
 import dk.itu.spcl.jlpf.impl.TestImplSequentialSceduler;
 import junit.framework.TestCase;
 
-/**
- * Created by centos on 10/14/14.
- */
 public class SequentialSchedulerTest extends TestCase {
-
 
     TestImplSequentialSceduler scheduler;
     TestImplFilter filter1;
@@ -20,7 +16,6 @@ public class SequentialSchedulerTest extends TestCase {
     TestImplFilter filter5;
 
     TestImplComputable computable;
-
 
     public SequentialSchedulerTest(String name) {
         super(name);
@@ -52,8 +47,6 @@ public class SequentialSchedulerTest extends TestCase {
         computable.setupFilterPipes(1);
 
         scheduler = new TestImplSequentialSceduler();
-
-
     }
 
     @Override
@@ -65,7 +58,6 @@ public class SequentialSchedulerTest extends TestCase {
         Bundle bundle = new Bundle();
         bundle.put(TestImplFilter.MESSAGE , message);
         computable.pushToSource(bundle);
-
     }
 
     public void testStartSequential(){
@@ -96,6 +88,4 @@ public class SequentialSchedulerTest extends TestCase {
         assertNotNull("Bundle is null" , bundle);
         assertEquals("Execution order is wrong" , "012345" , (String)bundle.get(TestImplFilter.MESSAGE));
     }
-
-
 }

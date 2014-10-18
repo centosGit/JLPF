@@ -45,5 +45,4 @@ public class FilterTest extends TestCase{
 
         assertNotNull("Bundle from output filter in null" , outputPipe.pop());
     }
-
 }

@@ -4,9 +4,6 @@ import dk.itu.spcl.jlpf.common.Bundle;
 import dk.itu.spcl.jlpf.impl.TestImplFilter;
 import junit.framework.TestCase;
 
-/**
- * Created by centos on 10/16/14.
- */
 public class ProcessingCoreTest extends TestCase {
 
     TestImplFilter filter1;
@@ -72,7 +69,6 @@ public class ProcessingCoreTest extends TestCase {
         }
 
         assertEquals("Core is running extra threads" , beforeThreads , Thread.activeCount());
-
     }
 
     public void testIsRunningThreadPerFilter(){
@@ -101,6 +97,4 @@ public class ProcessingCoreTest extends TestCase {
 
         assertEquals("Output is in wrong order" , "012345" , bundle.get(TestImplFilter.MESSAGE));
     }
-
-
 }

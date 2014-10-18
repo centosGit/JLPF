@@ -6,9 +6,6 @@ import dk.itu.spcl.jlpf.impl.TestImplIOController;
 import dk.itu.spcl.jlpf.impl.TestImplRWProtocol;
 import junit.framework.TestCase;
 
-/**
- * Created by Daniel on 10/16/2014.
- */
 public class IOControllerTest extends TestCase {
 
     TestImplRWProtocol protocolRW;

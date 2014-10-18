@@ -5,9 +5,6 @@ import dk.itu.spcl.jlpf.io.InputReader;
 import dk.itu.spcl.jlpf.io.OutputWriter;
 import dk.itu.spcl.jlpf.io.IOController;
 
-/**
- * Created by Daniel on 10/16/2014.
- */
 public class TestImplIOController extends IOController{
 
     public TestImplIOController(ProcessingCore core, InputReader reader, OutputWriter writer){
