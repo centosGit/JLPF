@@ -16,9 +16,28 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
     private final IOProtocolReader protocolReader;   //Reader implementation
     private final IOProtocolWriter protocolWriter;   //Writer implementation
 
+    /**
+     * Default constructor
+     * @param protocolReader Protocol reader
+     * @param protocolWriter Protocol writer
+     */
     public IORWDefaultImpl(IOProtocolReader protocolReader, IOProtocolWriter protocolWriter) {
         this.protocolReader = protocolReader;
         this.protocolWriter = protocolWriter;
+    }
+
+    /**
+     * Initialize protocol reader
+     */
+    public void initReader(){
+        protocolReader.init();
+    }
+
+    /**
+     * Initialize protocol writer
+     */
+    public void initWriter(){
+        protocolWriter.init();
     }
 
     /**
@@ -48,14 +67,4 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
         protocolReader.cleanup();
         protocolWriter.cleanup();
     }
-
-    public void initReader(){
-        protocolReader.init();
-    }
-
-    public void initWriter(){
-        protocolWriter.init();
-    }
-
-
 }
