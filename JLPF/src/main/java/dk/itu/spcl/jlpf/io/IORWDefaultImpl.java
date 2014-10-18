@@ -48,4 +48,14 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
         protocolReader.cleanup();
         protocolWriter.cleanup();
     }
+
+    public void initReader(){
+        protocolReader.init();
+    }
+
+    public void initWriter(){
+        protocolWriter.init();
+    }
+
+
 }

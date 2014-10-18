@@ -12,9 +12,9 @@ import java.io.IOException;
  */
 public abstract class IOController {
 
-    private final InputReader InputReader;       //Associated bundle input reader
-    private final OutputWriter OutputWriter;     //Associated bundle output writer
-    private final ProcessingCore mCore;           //ProcessingCore  instance
+    protected final InputReader InputReader;       //Associated bundle input reader
+    protected final OutputWriter OutputWriter;     //Associated bundle output writer
+    protected final ProcessingCore mCore;           //ProcessingCore  instance
     private boolean isRunning;                  //IO controller state
 
     /**
