@@ -24,7 +24,7 @@ public interface InputReader{
     public Bundle readInput() throws IOException;
 
     /**
-     * Cleanup method
+     * Cleanup reader
      */
-    public void cleanup();
+    public void cleanupReader();
 }

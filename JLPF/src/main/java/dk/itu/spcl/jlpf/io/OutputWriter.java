@@ -27,7 +27,7 @@ public interface OutputWriter {
     public void writeOutput(Bundle bundle) throws IOException;
 
     /**
-     * Cleanup method
+     * Cleanup writer
      */
-    public void cleanup();
+    public void cleanupWriter();
 }

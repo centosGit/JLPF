@@ -63,10 +63,18 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
     }
 
     /**
-     * Cleanup method
+     * Cleanup protocol reader
      */
-    public void cleanup(){
+    @Override
+    public void cleanupReader(){
         protocolReader.cleanup();
+    }
+
+    /**
+     * Cleanup protocol writer
+     */
+    @Override
+    public void cleanupWriter(){
         protocolWriter.cleanup();
     }
 }

@@ -32,17 +32,19 @@ public abstract class IOController {
 
     /**
      * Get a reference to input reader
+     *
      * @return Input reader
      */
-    public InputReader getInputReader(){
+    public InputReader getInputReader() {
         return mInputReader;
     }
 
     /**
      * Get a reference to output writer
+     *
      * @return Output writer
      */
-    public OutputWriter getOutputWriter(){
+    public OutputWriter getOutputWriter() {
         return mOutputWriter;
     }
 
@@ -67,7 +69,7 @@ public abstract class IOController {
      * It will start any threads used by the controller and then the actual
      * reading and writing will start
      */
-    public void start(){
+    public void start() {
         if (!isRunning) {
             setupController();
             setIsStarted(true);
@@ -80,7 +82,7 @@ public abstract class IOController {
      * and the {@link dk.itu.spcl.jlpf.io.OutputWriter}
      */
     public void stop() {
-        if(isRunning) {
+        if (isRunning) {
             onStop();
             cleanupIO();
             setIsStarted(false);
@@ -99,22 +101,22 @@ public abstract class IOController {
     /**
      * Called after Stop method. Cleans up IO protocols.
      */
-    private void cleanupIO(){
-        mInputReader.cleanup();
-        mOutputWriter.cleanup();
+    private void cleanupIO() {
+        mInputReader.cleanupReader();
+        mOutputWriter.cleanupWriter();
     }
 
     /**
      * Read from input and queue bundle for processing into the core,
      */
-    public void read() throws IOException{
+    public void read() throws IOException {
         mCore.pushBundle(mInputReader.readInput());
     }
 
     /**
      * Pop processed bundle from core and write into output.
      */
-    public void write() throws IOException{
+    public void write() throws IOException {
         mOutputWriter.writeOutput(mCore.popBundle());
     }
 
