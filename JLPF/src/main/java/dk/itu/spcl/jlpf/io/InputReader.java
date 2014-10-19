@@ -9,7 +9,12 @@ import java.io.IOException;
  * do not perform the actual reading but the task is delegated to {@link dk.itu.spcl.jlpf.io.IOProtocolReader}.
  * Clients of this class use the {@link InputReader#readInput()} to read the next {@link dk.itu.spcl.jlpf.common.Bundle}.
  */
-public interface InputReader {
+public interface InputReader{
+
+    /**
+     * Initialize input reader
+     */
+    public void initReader() throws IOException;
 
     /**
      * Method used to read the next {@link dk.itu.spcl.jlpf.common.Bundle}

@@ -29,14 +29,16 @@ public class IORWDefaultImpl implements InputReader, OutputWriter {
     /**
      * Initialize protocol reader
      */
-    public void initReader(){
+    @Override
+    public void initReader() throws IOException{
         protocolReader.init();
     }
 
     /**
      * Initialize protocol writer
      */
-    public void initWriter(){
+    @Override
+    public void initWriter() throws IOException{
         protocolWriter.init();
     }
 

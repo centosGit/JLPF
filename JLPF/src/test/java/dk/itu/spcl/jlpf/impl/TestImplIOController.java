@@ -14,7 +14,7 @@ public class TestImplIOController extends IOController{
     }
 
     @Override
-    public void init(){
+    public void setupController(){
 
     }
 
@@ -29,7 +29,6 @@ public class TestImplIOController extends IOController{
             super.write();
             super.write();
             super.write();
-
         }catch (IOException e){
 
         }

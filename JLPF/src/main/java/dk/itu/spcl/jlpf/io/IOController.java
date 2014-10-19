@@ -52,7 +52,7 @@ public abstract class IOController {
      * reading and writing will start
      */
     public void start(){
-        init();
+        setupController();
         setIsStarted(true);
         onExecute();
     }
@@ -102,7 +102,7 @@ public abstract class IOController {
      * This method should be used to initiate the controller.
      * I.e. Create any potential threads, initiate different protocols.
      */
-    public abstract void init();
+    public abstract void setupController();
 
     /**
      * This method should should contain the main execution of the controller.

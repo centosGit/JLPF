@@ -36,7 +36,7 @@ public class IOControllerTest extends TestCase {
         protocolRW = new TestImplRWProtocol();
         ioRW = new IORWDefaultImpl(protocolRW,protocolRW);
         ioController = new TestImplIOController(core,ioRW,ioRW);
-        ioController.init();
+        ioController.setupController();
     }
 
     @Override

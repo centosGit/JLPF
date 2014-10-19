@@ -15,6 +15,11 @@ import java.io.IOException;
 public interface OutputWriter {
 
     /**
+     * Initialize output writer
+     */
+    public void initWriter() throws IOException;
+
+    /**
      * Method used to write the next processed {@link dk.itu.spcl.jlpf.common.Bundle}
      *
      * @param {@link dk.itu.spcl.jlpf.common.Bundle} the next processed Bundle
