@@ -12,10 +12,10 @@ import java.io.IOException;
  */
 public abstract class IOController {
 
-    protected final InputReader InputReader;       //Associated bundle input reader
-    protected final OutputWriter OutputWriter;     //Associated bundle output writer
-    protected final ProcessingCore mCore;           //ProcessingCore  instance
-    private boolean isRunning;                  //IO controller state
+    protected final InputReader mInputReader;       //Associated bundle input reader
+    protected final OutputWriter mOutputWriter;     //Associated bundle output writer
+    protected final ProcessingCore mCore;          //ProcessingCore  instance
+    private boolean isRunning;                     //IO controller state
 
     /**
      * Constructor of the IO controller.
@@ -26,8 +26,24 @@ public abstract class IOController {
      */
     public IOController(ProcessingCore core, InputReader reader, OutputWriter writer) {
         mCore = core;
-        InputReader = reader;
-        OutputWriter = writer;
+        mInputReader = reader;
+        mOutputWriter = writer;
+    }
+
+    /**
+     * Get a reference to input reader
+     * @return Input reader
+     */
+    public InputReader getInputReader(){
+        return mInputReader;
+    }
+
+    /**
+     * Get a reference to output writer
+     * @return Output writer
+     */
+    public OutputWriter getOutputWriter(){
+        return mOutputWriter;
     }
 
     /**
@@ -52,9 +68,11 @@ public abstract class IOController {
      * reading and writing will start
      */
     public void start(){
-        setupController();
-        setIsStarted(true);
-        onExecute();
+        if (!isRunning) {
+            setupController();
+            setIsStarted(true);
+            onExecute();
+        }
     }
 
     /**
@@ -62,9 +80,11 @@ public abstract class IOController {
      * and the {@link dk.itu.spcl.jlpf.io.OutputWriter}
      */
     public void stop() {
-        onStop();
-        cleanupIO();
-        setIsStarted(false);
+        if(isRunning) {
+            onStop();
+            cleanupIO();
+            setIsStarted(false);
+        }
     }
 
     /**
@@ -80,22 +100,22 @@ public abstract class IOController {
      * Called after Stop method. Cleans up IO protocols.
      */
     private void cleanupIO(){
-        InputReader.cleanup();
-        OutputWriter.cleanup();
+        mInputReader.cleanup();
+        mOutputWriter.cleanup();
     }
 
     /**
      * Read from input and queue bundle for processing into the core,
      */
     public void read() throws IOException{
-        mCore.pushBundle(InputReader.readInput());
+        mCore.pushBundle(mInputReader.readInput());
     }
 
     /**
      * Pop processed bundle from core and write into output.
      */
     public void write() throws IOException{
-        OutputWriter.writeOutput(mCore.popBundle());
+        mOutputWriter.writeOutput(mCore.popBundle());
     }
 
     /**
