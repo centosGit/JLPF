@@ -1,6 +1,8 @@
 JLPF: Java Lightweight Processing Framework
 ========
 
+<img src="https://raw.githubusercontent.com/centosGit/JLPF/develop/Pictures/JLPF_Logo.png" height="150"/>
+
 JLPF is a java based processing framework which allows the creation and execution of customized pipes and filters architectures. The communication between pipes and filters is done by using a generic bundle objects, so any kind of data can be shared between them in order to be processed (video, sound, image, etc). Additionally, JLPF provides optimized filter execution schedulers to maximize processing performance.
 
 * Sequential scheduler: Executes every filter sequentially in the same (unique) thread. 
