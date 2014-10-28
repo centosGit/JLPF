@@ -14,7 +14,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 public class PollingPipe extends Pipe {
 
     public PollingPipe() {
-        mInternalQueue = new LinkedBlockingDeque<Bundle>();
+        mInternalQueue = new LinkedBlockingDeque<Bundle>(10);
     }
 
     /**
