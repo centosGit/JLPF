@@ -17,7 +17,8 @@ public class TimeOutPipe extends Pipe {
 
     private int mTimeOut;
     private TimeUnit mTimeUnit;
-    public TimeOutPipe(int timeOut , TimeUnit timeUnit){
+    public TimeOutPipe(int capacity , int timeOut , TimeUnit timeUnit){
+        super(capacity );
         mInternalQueue = new LinkedBlockingQueue<Bundle>(10);
         mTimeOut = timeOut;
         mTimeUnit = timeUnit;

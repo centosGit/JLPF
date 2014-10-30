@@ -35,7 +35,7 @@ public class ThreadPoolSchedulerTest extends TestCase {
         filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        computable = new TestImplComputable();
+        computable = new TestImplComputable(10);
 
         computable.addFilter(filter1);
         computable.addFilter(filter2);
@@ -68,7 +68,7 @@ public class ThreadPoolSchedulerTest extends TestCase {
     }
 
     public void testOrderOfBundles() {
-        createScheduler(4);
+        createScheduler(10);
 
         for (int i = 0; i < 100; i++)
             insertBundle("0");

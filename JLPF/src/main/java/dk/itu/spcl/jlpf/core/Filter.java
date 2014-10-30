@@ -15,6 +15,8 @@ public abstract class Filter implements Runnable {
     private boolean mHasStarted;   //Filter state
     private Pipe mInputPipe;       //Filter input pipe
     private Pipe mOutputPipe;      //Filter output pipe
+    private double mAvgExecutionTime;
+    private int mExecutionCounter;
 
     /**
      * Get filter id.
@@ -135,6 +137,28 @@ public abstract class Filter implements Runnable {
 
     protected Bundle innerExecute(Bundle bundle){
         setStarted();
-        return execute(bundle);
+        long startTime = startTimer();
+        Bundle newBundle = execute(bundle);
+        stopTimer(startTime);
+        return newBundle;
+    }
+
+    //TODO check if the timing needs synchronization
+    private long startTimer(){
+        mExecutionCounter++;
+        return System.nanoTime();
+    }
+
+    private void stopTimer(long startTime){
+        double time = (System.nanoTime() - startTime) / 1000000; //to get ms
+        mAvgExecutionTime += time;
+    }
+
+    public int getExecutionCounter(){
+        return mExecutionCounter;
+    }
+
+    public double getAvgExecutionTime(){
+        return mAvgExecutionTime / mExecutionCounter;
     }
 }

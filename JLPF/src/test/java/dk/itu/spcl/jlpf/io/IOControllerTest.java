@@ -28,7 +28,7 @@ public class IOControllerTest extends TestCase {
         filter1.setFilterName("1");
 
         //Start core
-        core = new ProcessingCore();
+        core = new ProcessingCore(10);
         core.addFilter(filter1);
         core.start(1);
 

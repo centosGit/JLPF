@@ -24,8 +24,8 @@ public class FilterTest extends TestCase{
             }
         };
 
-        inputPipe = new BlockingPipe();
-        outputPipe = new BlockingPipe();
+        inputPipe = new BlockingPipe(10);
+        outputPipe = new BlockingPipe(10);
     }
 
     @Override

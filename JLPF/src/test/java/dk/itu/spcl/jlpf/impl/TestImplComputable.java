@@ -9,6 +9,10 @@ import java.util.Map;
 
 public class TestImplComputable extends Computable {
 
+    public TestImplComputable(int pipeCapacity) {
+        super(pipeCapacity);
+    }
+
     public int getComputableSize(){
         return mFilterList.size();
     }

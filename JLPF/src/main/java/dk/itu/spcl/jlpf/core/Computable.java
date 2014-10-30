@@ -24,11 +24,14 @@ public class Computable {
     protected Pipe mPipeSource;                           //Input pipe
     protected Pipe mPipeSink;                             //Output pipe
 
-    public Computable() {
+    protected int mPipeCapacity;
+
+    public Computable(int pipeCapacity) {
+        mPipeCapacity = pipeCapacity;
         mFilterList = new ArrayList<Filter>();
         mFilterMap = new HashMap<Integer, Filter>();
-        mPipeSink = new BlockingPipe();
-        mPipeSource = new BlockingPipe();
+        mPipeSink = new BlockingPipe(pipeCapacity);
+        mPipeSource = new BlockingPipe(pipeCapacity);
     }
 
     /**
@@ -113,14 +116,33 @@ public class Computable {
 
             Pipe pipe;
             if (numberOfThreads == 1) {
-                pipe = new PollingPipe();
+                pipe = new PollingPipe(mPipeCapacity);
             } else if (numberOfThreads == mFilterList.size()) {
-                pipe = new BlockingPipe();
+                pipe = new BlockingPipe(mPipeCapacity);
             } else {
-                pipe = new TimeOutPipe(10, TimeUnit.MILLISECONDS);
+                pipe = new TimeOutPipe(mPipeCapacity , 10, TimeUnit.MILLISECONDS);
             }
             mFilterList.get(i).setOutput(pipe);
             mFilterList.get(i + 1).setInput(pipe);
         }
+    }
+
+
+    public static CoreStatistics collectCoreStatistcs(Computable computable){
+        //plus one to include the source and the sink
+        CoreStatistics statistics = new CoreStatistics(computable.mFilterList.size() + 1 , computable.mFilterList.size() , computable.mPipeSource.capacity());
+
+        for( int i = 0 ; i < computable.mFilterList.size() ; i++ ){
+            statistics.addFilterAvgTime(i , computable.mFilterList.get(i).getAvgExecutionTime());
+            statistics.addFilterExecutionCounter(i , computable.mFilterList.get(i).getExecutionCounter());
+            statistics.addFilterName(i , computable.mFilterList.get(i).getFilterName());
+        }
+
+        for( int i = 0 ; i < computable.mFilterList.size() ; i++ )
+            statistics.addPipeSize(i , computable.mFilterList.get(i).getInputPipe().size());
+
+        statistics.addPipeSize(computable.mFilterList.size() , computable.mPipeSink.size());
+
+        return statistics;
     }
 }

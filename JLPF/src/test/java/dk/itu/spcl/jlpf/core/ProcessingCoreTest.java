@@ -28,7 +28,7 @@ public class ProcessingCoreTest extends TestCase {
         filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        core = new ProcessingCore();
+        core = new ProcessingCore(10);
 
         core.addFilter(filter1);
         core.addFilter(filter2);

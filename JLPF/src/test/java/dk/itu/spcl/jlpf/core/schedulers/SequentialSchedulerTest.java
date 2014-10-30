@@ -36,7 +36,7 @@ public class SequentialSchedulerTest extends TestCase {
         filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        computable = new TestImplComputable();
+        computable = new TestImplComputable(10);
 
         computable.addFilter(filter1);
         computable.addFilter(filter2);

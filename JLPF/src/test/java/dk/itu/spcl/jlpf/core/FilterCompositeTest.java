@@ -46,8 +46,8 @@ public class FilterCompositeTest extends TestCase {
         filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        inputPipe = new BlockingPipe();
-        outputPipe = new BlockingPipe();
+        inputPipe = new BlockingPipe(10);
+        outputPipe = new BlockingPipe(10);
 
         composite.setInput(inputPipe);
         composite.setOutput(outputPipe);
