@@ -18,7 +18,7 @@ Java 1.7
 
 ####Background
 
-Ubiquitous interaction (gaze tracking, body gesture tracking, speech recognition, etc.) techniques are among the most interesting HCI techniques for mobile and wearable systems. However, most of the existing technologies to support them require a remote computer to perform such processing do to it's high computational resource consuming characteristic. Therefore, designing and developing a light-weighted framework able to run in mobile devices could be a valuable technology.
+Ubiquitous interaction (gaze tracking, body gesture tracking, speech recognition, etc.) techniques are among the most interesting HCI techniques for mobile and wearable systems. However, most of the existing technologies to support them require a remote computer to perform such processing due to it's high computational resource consuming characteristic. Therefore, designing and developing a light-weighted framework able to run in mobile devices could be a valuable technology.
 
 ####Usage
 
@@ -28,7 +28,7 @@ Ubiquitous interaction (gaze tracking, body gesture tracking, speech recognition
 
 3. Implement IOProtocolReader and IOProtocolWriter interfaces. These interfaces will serve as framework input/output (i.e. wireless camera communication, network connection).
 
-4. Implement InputReader, OutputWriter interfaces. This interfaces specify how to read and write from protocols. A default implementation is given to be used out of the box. IORWDefaultImpl can be created by giving a IOProtocolReader and a IOProtocolWriter instances to the constructor.
+4. Implement InputReader, OutputWriter interfaces. These interfaces specify how to read and write from protocols. A default implementation is given to be used out of the box. IORWDefaultImpl can be created by giving an IOProtocolReader and an IOProtocolWriter instances to the constructor.
 
 5. Extend and implement IOController class. This class will implement main IO execution flow. Create an instance by giving a ProcessingCore, InputReader and OutputWriter referenced. Initialize and start.
 
