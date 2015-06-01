@@ -1,7 +1,7 @@
 JLPF: Java Lightweight Processing Framework
 ========
 
-<img src="Images/JLPF_Logo.png?raw=true" height="150"/>
+<img src="Images/JLPF_Logo.png?raw=true" height="120"/>
 
 JLPF is a java based processing framework which allows the creation and execution of customized pipes and filters architectures. The communication between pipes and filters is done by using a generic bundle objects, so any kind of data can be shared between them in order to be processed (video, sound, image, etc). Additionally, JLPF provides optimized filter execution schedulers to maximize processing performance.
 
@@ -36,6 +36,4 @@ Ubiquitous interaction (gaze tracking, body gesture tracking, speech recognition
 
 ####Example
 
-A gaze tracking system implementation example can be seen at
-
-https://github.com/centosGit/EyeDroid
+A mobile gaze tracking system implemented in top of JLPF can be found at [EyeDroid] (https://github.com/centosGit/EyeDroid).
