@@ -21,12 +21,10 @@ JLPF is a java based processing framework which allows the creation and executio
 
 Composite filters containing other filters can be created. Composites run sequentially.
 
-An IOController implementation is given to provide communication between the framework core and the data producer/consumer, such as mobile and wearable devices.
-
 HOW TO USE?
 ---------
 
-###1. Implement custom filters by extending Filter Class. Composite filters can be implemented by extending FilterComposite class.
+#####1. Implement custom filters by extending Filter Class. Composite filters can be implemented by extending the FilterComposite class.
 
 ```
 public class SingleFilter extends Filter {
@@ -65,7 +63,7 @@ public class CompositeFilter extends FilterComposite {
 
 ```
 
-###2. Create a ProcessingCore instance. Add created filters to the core and start by specifying the number of threads to use.
+#####2. Create a ProcessingCore instance. Add filters to the core and start it by specifying the number of threads to use.
 
 ```
 //Define the pipe's queue size
@@ -97,7 +95,7 @@ core.addFilter(filter3);
 core.start(NUM_OF_THREADS);
 ```
 
-###3. Implement IOProtocolReader and IOProtocolWriter interfaces. These interfaces will serve as framework input/output (i.e. wireless camera communication, network connection).
+#####3. Implement IOProtocolReader and IOProtocolWriter interfaces. These interfaces will serve as the input/output to the core (i.e. network connections).
 
 ###### Source -> Core
 
@@ -149,13 +147,13 @@ public class WriteProtocol implements IOProtocolWriter{
  IOProtocolWriter Wprotocol = new WriteProtocol();
 ```
 
-###4. Implement InputReader, OutputWriter interfaces. These interfaces specify how to read and write from the protocols. A default implementation is given readily to be used out of the box. IORWDefaultImpl can be created by giving an IOProtocolReader and an IOProtocolWriter instances to the constructor.
+#####4. Implement InputReader, OutputWriter interfaces. These interfaces specify how to read and write from the protocols. A default implementation is given readily to be used out of the box. IORWDefaultImpl can be created by giving an IOProtocolReader and an IOProtocolWriter instances to the constructor.
 
 ```
  IORWDefaultImpl ioRW = new IORWDefaultImpl(Rprotocol, Wprotocol);
 ```
 
-###5. Create an IOController by giving a ProcessingCore, an InputReader and an OutputWriter references. This instance will handle the I/O core execution flow. Initialize and start.
+#####5. Create an IOController by giving a ProcessingCore, an InputReader and an OutputWriter references. This instance will handle the I/O core execution flow. Initialize and start.
 
 ```
  IOController ioController = new ImplRWProtocol(core, ioRW, ioRW);
@@ -163,7 +161,7 @@ public class WriteProtocol implements IOProtocolWriter{
  ioController.start();
 ```
 
-###6. Have fun!
+#####6. Have fun!
 
 TARGET
 ---------
