@@ -176,3 +176,8 @@ USAGE EXAMPLE
 ---------
 
 A mobile gaze tracking system implemented in the top of JLPF can be found at [EyeDroid] (https://github.com/centosGit/EyeDroid).
+
+COLLABORATORS
+--------------
+
+[Daniel Garcia] (https://github.com/danielgg88), [Ioannis Sintos] (https://github.com/centosGit)
