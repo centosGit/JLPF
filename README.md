@@ -11,8 +11,6 @@ Ubiquitous interaction (gaze tracking, body gesture tracking, speech recognition
 WHAT IS JLPF?
 --------------
 
-<img src="Images/pipes_and_filters.png?raw=true"/>
-
 JLPF is a java based processing framework which allows the creation and execution of customized pipes and filters architectures. The communication between pipes and filters is done by using a generic bundle objects (key-value pair), so any kind of data can be shared between them in order to be processed (video, sound, image, etc). Additionally, JLPF provides optimized filter execution schedulers to maximize processing performance.
 
 * Sequential scheduler: Executes every filter sequentially in the same (unique) thread. 
@@ -23,6 +21,8 @@ Composite filters containing other filters can be created. Composites run sequen
 
 HOW TO USE?
 ---------
+
+<img src="Images/pipes_and_filters.png?raw=true"/>
 
 #####1. Implement custom filters by extending Filter Class. Composite filters can be implemented by extending the FilterComposite class.
 
