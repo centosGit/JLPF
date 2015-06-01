@@ -26,7 +26,7 @@ HOW TO USE?
 
 #####1. Implement custom filters by extending Filter Class. Composite filters can be implemented by extending the FilterComposite class.
 
-```
+```java
 public class SingleFilter extends Filter {
 
     public static final String MESSAGE = "jlpf.singleFilter.message";
@@ -45,7 +45,7 @@ public class SingleFilter extends Filter {
 }
 ```
 
-```
+```java
 public class CompositeFilter extends FilterComposite {
 
     public int compositeSize(){
@@ -60,12 +60,11 @@ public class CompositeFilter extends FilterComposite {
         return this.mFilterMap;
     }
 }
-
 ```
 
 #####2. Create a ProcessingCore instance. Add filters to the core and start it by specifying the number of threads to use.
 
-```
+```java
 //Define the pipe's queue size
 ProcessingCore core = new ProcessingCore(CORE_QUEUE_SIZE);
 
@@ -101,7 +100,7 @@ core.start(NUM_OF_THREADS);
 
 Read is iteratively called. The returned bundle from read() is queued into the core to be processed.
 
-```
+```java
 public class ReadProtocol implements IOProtocolReader{
 
     @Override
@@ -123,7 +122,7 @@ public class ReadProtocol implements IOProtocolReader{
 
 Write is iteratively called. The method receives a processed bundle from the core.
 
-```
+```java
 public class WriteProtocol implements IOProtocolWriter{
 
     @Override
@@ -141,7 +140,7 @@ public class WriteProtocol implements IOProtocolWriter{
 
 ```
 
-```
+``` java
 //Create the I/O protocols
  IOProtocolReader Rprotocol = new ReadProtocol();
  IOProtocolWriter Wprotocol = new WriteProtocol();
@@ -149,13 +148,13 @@ public class WriteProtocol implements IOProtocolWriter{
 
 #####4. Implement InputReader, OutputWriter interfaces. These interfaces specify how to read and write from the protocols. A default implementation is given readily to be used out of the box. IORWDefaultImpl can be created by giving an IOProtocolReader and an IOProtocolWriter instances to the constructor.
 
-```
+```java
  IORWDefaultImpl ioRW = new IORWDefaultImpl(Rprotocol, Wprotocol);
 ```
 
 #####5. Create an IOController by giving a ProcessingCore, an InputReader and an OutputWriter references. This instance will handle the I/O core execution flow. Initialize and start.
 
-```
+```java
  IOController ioController = new ImplRWProtocol(core, ioRW, ioRW);
  ioController.setupController();
  ioController.start();
