@@ -6,9 +6,6 @@ import dk.itu.spcl.jlpf.impl.TestImplIOController;
 import dk.itu.spcl.jlpf.impl.TestImplRWProtocol;
 import junit.framework.TestCase;
 
-/**
- * Created by Daniel on 10/16/2014.
- */
 public class IOControllerTest extends TestCase {
 
     TestImplRWProtocol protocolRW;
@@ -31,7 +28,7 @@ public class IOControllerTest extends TestCase {
         filter1.setFilterName("1");
 
         //Start core
-        core = new ProcessingCore();
+        core = new ProcessingCore(10);
         core.addFilter(filter1);
         core.start(1);
 
@@ -39,7 +36,7 @@ public class IOControllerTest extends TestCase {
         protocolRW = new TestImplRWProtocol();
         ioRW = new IORWDefaultImpl(protocolRW,protocolRW);
         ioController = new TestImplIOController(core,ioRW,ioRW);
-        ioController.init();
+        ioController.setupController();
     }
 
     @Override

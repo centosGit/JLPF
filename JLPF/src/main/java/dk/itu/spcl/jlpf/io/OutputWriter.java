@@ -2,6 +2,8 @@ package dk.itu.spcl.jlpf.io;
 
 import dk.itu.spcl.jlpf.common.Bundle;
 
+import java.io.IOException;
+
 /**
  * Interface used to implement a specific writer. Implementations of this interface
  * do not perform the actual writing but the task is delegated to
@@ -13,14 +15,19 @@ import dk.itu.spcl.jlpf.common.Bundle;
 public interface OutputWriter {
 
     /**
+     * Initialize output writer
+     */
+    public void initWriter() throws IOException;
+
+    /**
      * Method used to write the next processed {@link dk.itu.spcl.jlpf.common.Bundle}
      *
      * @param {@link dk.itu.spcl.jlpf.common.Bundle} the next processed Bundle
      */
-    public void writeOutput(Bundle bundle);
+    public void writeOutput(Bundle bundle) throws IOException;
 
     /**
-     * Cleanup method
+     * Cleanup writer
      */
-    public void cleanup();
+    public void cleanupWriter();
 }

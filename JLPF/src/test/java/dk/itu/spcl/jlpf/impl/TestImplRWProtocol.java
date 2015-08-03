@@ -4,9 +4,6 @@ import dk.itu.spcl.jlpf.common.Bundle;
 import dk.itu.spcl.jlpf.io.IOProtocolReader;
 import dk.itu.spcl.jlpf.io.IOProtocolWriter;
 
-/**
- * Created by Daniel on 10/16/2014.
- */
 public class TestImplRWProtocol implements IOProtocolReader, IOProtocolWriter{
 
     public int countRead;

@@ -6,11 +6,7 @@ import dk.itu.spcl.jlpf.impl.TestImplFilter;
 import dk.itu.spcl.jlpf.impl.TestImplThreadPerFilterScheduler;
 import junit.framework.TestCase;
 
-/**
- * Created by centos on 10/14/14.
- */
 public class ThreadPerFilterSchedulerTest extends TestCase {
-
 
     TestImplThreadPerFilterScheduler scheduler;
     TestImplFilter filter1;
@@ -42,7 +38,7 @@ public class ThreadPerFilterSchedulerTest extends TestCase {
         filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        computable = new TestImplComputable();
+        computable = new TestImplComputable(10);
 
         computable.addFilter(filter1);
         computable.addFilter(filter2);
@@ -53,8 +49,6 @@ public class ThreadPerFilterSchedulerTest extends TestCase {
         computable.setupFilterPipes(1);
 
         scheduler = new TestImplThreadPerFilterScheduler();
-
-
     }
 
     @Override
@@ -66,7 +60,6 @@ public class ThreadPerFilterSchedulerTest extends TestCase {
         Bundle bundle = new Bundle();
         bundle.put(TestImplFilter.MESSAGE , message);
         computable.pushToSource(bundle);
-
     }
 
     public void testStartThreadPool(){
@@ -76,7 +69,6 @@ public class ThreadPerFilterSchedulerTest extends TestCase {
     }
 
     public void testNumberOfThreadsRunning(){
-
         int beforeNumThreads = Thread.activeCount();
         scheduler.startScheduler(computable);
         insertBundle("0");
@@ -97,6 +89,4 @@ public class ThreadPerFilterSchedulerTest extends TestCase {
         assertNotNull("Bundle is null" , bundle);
         assertEquals("Execution order is wrong" , "012345" , (String)bundle.get(TestImplFilter.MESSAGE));
     }
-
-
 }

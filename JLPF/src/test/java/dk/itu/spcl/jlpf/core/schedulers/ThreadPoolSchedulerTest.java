@@ -6,11 +6,7 @@ import dk.itu.spcl.jlpf.impl.TestImplFilter;
 import dk.itu.spcl.jlpf.impl.TestImplThreadPoolScheduler;
 import junit.framework.TestCase;
 
-/**
- * Created by centos on 10/17/14.
- */
 public class ThreadPoolSchedulerTest extends TestCase {
-
 
     TestImplThreadPoolScheduler scheduler;
     TestImplFilter filter1;
@@ -20,8 +16,6 @@ public class ThreadPoolSchedulerTest extends TestCase {
     TestImplFilter filter5;
 
     TestImplComputable computable;
-
-    final int THREADS = 5;
 
     public ThreadPoolSchedulerTest(String name) {
         super(name);
@@ -41,15 +35,13 @@ public class ThreadPoolSchedulerTest extends TestCase {
         filter5 = new TestImplFilter();
         filter5.setFilterName("5");
 
-        computable = new TestImplComputable();
+        computable = new TestImplComputable(10);
 
         computable.addFilter(filter1);
         computable.addFilter(filter2);
         computable.addFilter(filter3);
         computable.addFilter(filter4);
         computable.addFilter(filter5);
-
-
     }
 
     @Override
@@ -62,12 +54,10 @@ public class ThreadPoolSchedulerTest extends TestCase {
         scheduler = new TestImplThreadPoolScheduler(threads);
     }
 
-
     private void insertBundle(String message) {
         Bundle bundle = new Bundle();
         bundle.put(TestImplFilter.MESSAGE, message);
         computable.pushToSource(bundle);
-
     }
 
     public void testStartThreadPool() {
@@ -78,7 +68,7 @@ public class ThreadPoolSchedulerTest extends TestCase {
     }
 
     public void testOrderOfBundles() {
-        createScheduler(4);
+        createScheduler(10);
 
         for (int i = 0; i < 100; i++)
             insertBundle("0");
@@ -91,5 +81,4 @@ public class ThreadPoolSchedulerTest extends TestCase {
         assertNotNull("Bundle is null", bundle);
         assertEquals("Execution order is wrong", "012345", (String) bundle.get(TestImplFilter.MESSAGE));
     }
-
 }

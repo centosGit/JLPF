@@ -40,7 +40,7 @@ public class ComputableTest extends TestCase {
 
         composite1 = new TestImplComposite();
         composite2 = new TestImplComposite();
-        computable = new TestImplComputable();
+        computable = new TestImplComputable(10);
     }
 
     @Override
@@ -104,9 +104,9 @@ public class ComputableTest extends TestCase {
         insertFirstBundle("");
         insertFirstBundle("");
 
-        TestImplPipe pipe1 = new TestImplPipe();
-        TestImplPipe pipe2 = new TestImplPipe();
-        TestImplPipe pipe3 = new TestImplPipe();
+        TestImplPipe pipe1 = new TestImplPipe(10);
+        TestImplPipe pipe2 = new TestImplPipe(10);
+        TestImplPipe pipe3 = new TestImplPipe(10);
 
         filter1.setInput(computable.getSource());
         filter1.setOutput(pipe1);

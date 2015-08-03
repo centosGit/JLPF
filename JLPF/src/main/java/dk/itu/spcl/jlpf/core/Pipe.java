@@ -12,7 +12,29 @@ import java.util.concurrent.BlockingQueue;
 
 public abstract class Pipe {
 
+    protected int mCapacity;
+
     protected BlockingQueue<Bundle> mInternalQueue; //Internal bundle queue
+
+    public Pipe(int capacity) {
+        mCapacity = capacity;
+    }
+
+    /**
+     * Return the size of the internal list
+     * @return int
+     * */
+    protected int size() {
+        return mInternalQueue.size();
+    }
+    /**
+     * Get the maximum capacity of the pipe
+     * @return int
+     * */
+    public int capacity() {
+        return mCapacity;
+    }
+
 
     /**
      * Push a {@link dk.itu.spcl.jlpf.common.Bundle} object into the pipe.
@@ -31,7 +53,7 @@ public abstract class Pipe {
     /**
      * Cleanup pipe queue content.
      */
-    public void cleanup(){
+    public void cleanup() {
         mInternalQueue.clear();
     }
 }

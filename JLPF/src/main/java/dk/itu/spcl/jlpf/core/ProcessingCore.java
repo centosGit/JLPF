@@ -17,13 +17,20 @@ public class ProcessingCore {
 
     private Computable mComputable;     //Computable object used by the scheduler
     private Scheduler mScheduler;       //Scheduler executor
+    private boolean mStatisticsRunning;
+    private StatisticsThread mStatisticsThread;
+
+    public interface StatisticsCallback{
+        public void onStatisticsUpdates( CoreStatistics statistics );
+    }
 
     /**
      * Set the {@link dk.itu.spcl.jlpf.core.Scheduler}-{@link dk.itu.spcl.jlpf.core.Computable} pair to
      * be executed by the core.
      */
-    public ProcessingCore() {
-        mComputable = new Computable();
+    public ProcessingCore(int pipeCapacity) {
+        mComputable = new Computable(pipeCapacity);
+        mStatisticsRunning = false;
     }
 
     /**
@@ -75,6 +82,7 @@ public class ProcessingCore {
      * Stop the scheduler and cleanup the computable instance.
      */
     public void stop() {
+        disableStatistcs();
         mScheduler.innerStop();
         mComputable.cleanup();
     }
@@ -96,4 +104,27 @@ public class ProcessingCore {
     public Bundle popBundle() {
         return mComputable.popFromSink();
     }
+
+    public CoreStatistics getStatisticsNow(){
+        return Computable.collectCoreStatistcs(mComputable);
+    }
+
+    public void enableStatistics(StatisticsCallback callback , int time){
+        mStatisticsRunning = true;
+        mStatisticsThread = new StatisticsThread(this , callback , time);
+        mStatisticsThread.start();
+    }
+
+    public void disableStatistcs(){
+        if( mStatisticsRunning && mStatisticsThread.isRunning()){
+            mStatisticsRunning = false;
+            mStatisticsThread.interrupt();
+            try {
+                mStatisticsThread.join(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

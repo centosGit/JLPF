@@ -13,8 +13,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlockingPipe extends Pipe {
 
-    public BlockingPipe() {
-        mInternalQueue = new LinkedBlockingQueue<Bundle>();
+    public BlockingPipe(int capacity) {
+        super(capacity);
+        mInternalQueue = new LinkedBlockingQueue<Bundle>(mCapacity);
     }
 
     /**

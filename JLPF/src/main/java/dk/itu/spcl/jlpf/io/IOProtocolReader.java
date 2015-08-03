@@ -2,6 +2,8 @@ package dk.itu.spcl.jlpf.io;
 
 import dk.itu.spcl.jlpf.common.Bundle;
 
+import java.io.IOException;
+
 /**
  * Base interface for every object that wants to act as a {@link dk.itu.spcl.jlpf.io.IOProtocolReader}.
  * This class should be passed to a {@link dk.itu.spcl.jlpf.io.InputReader} instance and used by the
@@ -15,5 +17,5 @@ public interface IOProtocolReader extends IOProtocol {
      *
      * @return {@link dk.itu.spcl.jlpf.common.Bundle} next Bundle read from the source.
      * */
-    public Bundle read();
+    public Bundle read() throws IOException;
 }
